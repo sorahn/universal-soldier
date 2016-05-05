@@ -11,11 +11,12 @@
   "scripts": {
     "build": "npm run clean && webpack --config webpack.config.js",
     "clean": "rm public/bundle.js && rm public/style.css && rm public/vendor.js || true",
-    "start": "nodemon -w src -x npm run start:dev",
+    "start": "nodemon -x npm run start:dev",
     "start:prod": "NODE_ENV=prod node server.js",
     "start:dev": "NODE_ENV=dev babel-node server.js"
   },
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "koa": "^2.0.0",
     "koa-mount": "^2.0.0",
     "koa-router": "^7.0.1",

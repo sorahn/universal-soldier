@@ -4,6 +4,8 @@ import serve from 'koa-static'
 import send from 'koa-send'
 import mount from 'koa-mount'
 
+import * as routes from './src/api/routes'
+
 import path from 'path'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'koa-webpack-dev-middleware'
@@ -13,9 +15,20 @@ const app = new Koa()
 const router = new Router()
 
 const assets = serve(__dirname + '/public', )
+app.use(mount('/public', assets))
 
+
+// Assign a route from our exported route objects.
+const assign = ({ verb, route, actions }) => {
+  console.log(verb, route, actions)
+  router[verb](route, ...actions)
+}
+
+// Iterate over all the routes, and assign them.
+Object.keys(routes).map(i => assign(routes[i]))
+
+// Everyone else gets index.html
 router.get('*', async ctx => await send(ctx, 'index.html'))
-
 
 /* api endpoints */
 
@@ -30,7 +43,7 @@ router.get('*', async ctx => await send(ctx, 'index.html'))
 //   stats: { colors: true }
 // }))
 
-app.use(mount('/public', assets))
+
 app.use(router.routes())
 
 app.listen(3000, 'localhost', function (err) {
