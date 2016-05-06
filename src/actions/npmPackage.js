@@ -5,7 +5,6 @@ function fetchPackage(url, name) {
   return dispatch => {
     return fetch(url + '/api/npmPackage?npmPackage=' + name )
       .then(req => {
-        console.log('hello')
         return req.json()
       })
       .then(json => dispatch(receivePackage(json)))
