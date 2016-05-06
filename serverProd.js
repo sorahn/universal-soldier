@@ -1,4 +1,10 @@
-import express from 'express'
+import Koa from 'koa'
+import Router from 'koa-router'
+import serve from 'koa-static'
+import mount from 'koa-mount'
+
+import * as apiRoutes from './src/api/routes'
+
 import serialize from 'serialize-javascript'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
@@ -8,16 +14,22 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { configureStore } from './src/store'
 import routes from './src/routes'
 
-const app = express()
-app.use('/public', express.static(__dirname + '/public'))
+import fetch from 'isomorphic-fetch'
 
-/* api endpoints */
+const app = new Koa()
+const router = new Router()
 
-import npmPackages from './src/api/routes/npmPackages'
-app.use('/api/npmPackages', npmPackages)
+const assets = serve(__dirname + '/public', )
+app.use(mount('/public', assets))
 
-import npmPackage from './src/api/routes/npmPackage'
-app.use('/api/npmPackage', npmPackage)
+// Assign a route from our exported route objects.
+const assign = ({ verb, route, actions }) => {
+  console.log(verb, route, actions)
+  router[verb](route, ...actions)
+}
+
+// Iterate over all the routes, and assign them.
+Object.keys(apiRoutes).map(i => assign(apiRoutes[i]))
 
 const HTML = ({ content, store }) => (
   <html>
@@ -33,51 +45,84 @@ const HTML = ({ content, store }) => (
   </html>
 )
 
+router.get('*', async ctx => {
 
-app.use(function (req, res) {
-
-  const memoryHistory = createMemoryHistory(req.path)
+  const memoryHistory = createMemoryHistory(ctx.request.path)
   let store = configureStore(memoryHistory )
   const history = syncHistoryWithStore(memoryHistory, store)
 
-  /* react router match history */
-  match({ history, routes , location: req.url }, (error, redirectLocation, renderProps) => {
-
-    if (error) {
-      res.status(500).send(error.message)
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-
-      /* call static fetchData on the container component */
-      fetchData().then( ()=> {
-        store = configureStore(memoryHistory, store.getState() )
-        const content = renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps}/>
-          </Provider>
-        )
-        res.send('<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>))
-      }).catch(function (error) {
-        /* do something with error */
-        console.log(error.stack);
-      });
-
-      /* fetch data promise */
-      function fetchData () {
-        let { query, params } = renderProps;
-        return new Promise(function(resolve, reject) {
-          let comp = renderProps.components[renderProps.components.length - 1].WrappedComponent;
-          let url = req.protocol + '://' + req.get('host')
-          resolve(comp.fetchData({ params, store, url }));
-        });
-      }
-
-    }
+  // @TODO how to do this better with ES6
+  let stuff = {}
+  match({ history, routes , location: ctx.request.url }, (error, redirect, props) => {
+    stuff = {error, redirect, props}
   })
 
+  const { error, redirect, props } = stuff
+
+  await fetchData().then( ()=> {
+    store = configureStore(memoryHistory, store.getState() )
+    const content = renderToString(
+      <Provider store={store}>
+        <RouterContext {...props}/>
+      </Provider>
+    )
+
+    ctx.body = '<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>)
+  }).catch(function (error) {
+    /* do something with error */
+    console.log(error.stack);
+  });
+
+  /* fetch data promise */
+  function fetchData () {
+    let { query, params } = props;
+    return new Promise(function(resolve, reject) {
+      let comp = props.components[props.components.length - 1].WrappedComponent;
+      let url = ctx.request.protocol + '://' + ctx.request.get('host')
+      resolve(comp.fetchData({ params, store, url }));
+    });
+  }
+
+
+  /* react router match history */
+
+  // match({ history, routes , location: ctx.request.url }, (error, redirectLocation, renderProps) => {
+
+  //   if (error) {
+  //     ctx.throw(500, error.message)
+  //   } else if (redirectLocation) {
+  //     ctx.redirect(302, redirectLocation.pathname + redirectLocation.search)
+  //   } else if (renderProps) {
+
+  //     /* call static fetchData on the container component */
+  //     fetchData().then( ()=> {
+  //       store = configureStore(memoryHistory, store.getState() )
+  //       const content = renderToString(
+  //         <Provider store={store}>
+  //           <RouterContext {...renderProps}/>
+  //         </Provider>
+  //       )
+
+  //       ctx.body = '<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>)
+  //     }).catch(function (error) {
+  //       /* do something with error */
+  //       console.log(error.stack);
+  //     });
+
+  //     /* fetch data promise */
+  //     function fetchData () {
+  //       let { query, params } = renderProps;
+  //       return new Promise(function(resolve, reject) {
+  //         let comp = renderProps.components[renderProps.components.length - 1].WrappedComponent;
+  //         let url = ctx.request.protocol + '://' + ctx.request.get('host')
+  //         resolve(comp.fetchData({ params, store, url }));
+  //       });
+  //     }
+  //   }
+  // })
 })
 
+app.use(router.routes())
 
 app.listen(3000, 'localhost', function (err) {
   if (err) {

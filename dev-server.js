@@ -17,7 +17,6 @@ const router = new Router()
 const assets = serve(__dirname + '/public', )
 app.use(mount('/public', assets))
 
-
 // Assign a route from our exported route objects.
 const assign = ({ verb, route, actions }) => {
   console.log(verb, route, actions)
@@ -30,18 +29,10 @@ Object.keys(routes).map(i => assign(routes[i]))
 // Everyone else gets index.html
 router.get('*', async ctx => await send(ctx, 'index.html'))
 
-/* api endpoints */
-
-// const npmPackages = require('./src/api/routes/npmPackages')
-// app.use('/api/npmPackages', npmPackages)
-
-// const npmPackage = require('./src/api/routes/npmPackage')
-// app.use('/api/npmPackage', npmPackage)
-
-// app.use(webpackDevMiddleware(webpack(webpackConfig), {
-//   publicPath: webpackConfig.output.publicPath,
-//   stats: { colors: true }
-// }))
+app.use(webpackDevMiddleware(webpack(webpackConfig), {
+  publicPath: webpackConfig.output.publicPath,
+  stats: { colors: true }
+}))
 
 
 app.use(router.routes())

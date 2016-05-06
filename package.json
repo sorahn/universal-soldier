@@ -12,7 +12,7 @@
     "build": "npm run clean && webpack --config webpack.config.js",
     "clean": "rm public/bundle.js && rm public/style.css && rm public/vendor.js || true",
     "start": "nodemon -x npm run start:dev",
-    "start:prod": "NODE_ENV=prod node server.js",
+    "start:prod": "NODE_ENV=prod babel-node server.js",
     "start:dev": "NODE_ENV=dev babel-node server.js"
   },
   "dependencies": {

@@ -16,7 +16,7 @@ function App({ pushPath, children }) {
 
       <Header />
 
-      <main>      
+      <main>
         {children}
       </main>
 

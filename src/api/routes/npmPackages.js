@@ -1,37 +1,24 @@
-var express = require('express');
-var router = express.Router();
-var request = require("request");
+import fetch from 'isomorphic-fetch'
 
-function getPackages(keyword, cb) {
+const getPackages = async ctx => {
+  const { keyword = '' } = ctx.request.query
+  const registryUrl = 'https://registry.npmjs.org'
+  const viewsPath = '-/_view'
+  const keywordView = 'byKeyword'
+  const query = `startkey=["${keyword}"]&endkey=["${keyword}",{}]&group_level=3`
+  const url = [registryUrl, viewsPath, keywordView].join('/') + '?' + query
 
-  var registryUrl = 'https://registry.npmjs.org';
-  var dlCountUrl    = 'https://api.npmjs.org/downloads/point/last-week';
-  var viewsPath     = '-/_view';
-  var keywordView   = 'byKeyword';
-  var query         = 'startkey=["' + keyword + '"]'
-      query        += '&endkey=["' + keyword + '",{}]'
-      query        += '&group_level=3'
-
-  var url = [registryUrl, viewsPath, keywordView].join('/') + '?' + query
-
-  request(url, function (error, response, body) {
-    cb(error, response, body)
-  });
+  await fetch(url)
+    .then(response => response.json())
+    .then(json => ctx.body = json)
+    .catch(error => {
+      console.error('error: ' + error)
+      ctx.error = error
+    })
 }
 
-
-router.get('/', function(req, res) {
-
-  var keyword = req.query['keyword'] || '';
-
-  getPackages(keyword, function (error, response, body) {
-
-    if (error) {
-      console.log("We’ve encountered an error: " + error);
-    }
-    res.json({ npmPackages: JSON.parse(body) })
-  })
-
-});
-
-module.exports = router;
+export default {
+  verb: 'get',
+  route: '/api/npmPackages',
+  actions: [ getPackages ],
+}
