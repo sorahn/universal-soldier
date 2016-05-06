@@ -1,16 +1,16 @@
-const constants = require('../constants');
+import * as constants from '../constants'
 
 const initialState = {}
 
-function update(state = initialState, action) {
-
-	switch (action.type) {
-
-		case constants.RECEIVE_PACKAGE:
-			return Object.assign({}, state, action.json.npmPackage)
-		default:
-			return state
+export default function reducer(state = initialState, action) {
+  switch (action.type) {
+    case constants.RECEIVE_PACKAGE:
+      return {
+        ...state,
+        ...action.json
+      }
+      return Object.assign({}, state, action.json)
+    default:
+      return state
   }
 }
-
-module.exports = update;

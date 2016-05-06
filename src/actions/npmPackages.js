@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-const constants = require('../constants')
+import * as constants from '../constants'
 
 function fetchPackages(url) {
   return dispatch => {

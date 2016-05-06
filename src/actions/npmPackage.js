@@ -4,7 +4,9 @@ const constants = require('../constants')
 function fetchPackage(url, name) {
   return dispatch => {
     return fetch(url + '/api/npmPackage?npmPackage=' + name )
-      .then(req => req.json())
+      .then(req => {
+        return req.json()
+      })
       .then(json => dispatch(receivePackage(json)))
   }
 }
