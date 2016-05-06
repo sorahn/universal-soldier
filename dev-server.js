@@ -14,9 +14,6 @@ import webpackConfig from './webpack.config.dev'
 const app = new Koa()
 const router = new Router()
 
-const assets = serve(__dirname + '/public', )
-app.use(mount('/public', assets))
-
 // Assign a route from our exported route objects.
 const assign = ({ verb, route, actions }) => {
   console.log(verb, route, actions)
@@ -34,6 +31,8 @@ app.use(webpackDevMiddleware(webpack(webpackConfig), {
   stats: { colors: true }
 }))
 
+const assets = serve(__dirname + '/public', )
+app.use(mount('/public', assets))
 
 app.use(router.routes())
 
