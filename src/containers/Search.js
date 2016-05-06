@@ -3,8 +3,12 @@ import { connect } from 'react-redux'
 import { fetchSearch } from '../actions/search'
 
 class Search extends Component {
+  static fetchData ({ store }) {
+    return store.dispatch(fetchSearch())
+  }
+
   componentWillMount () {
-    this.props.fetchSearch()
+    return this.props.fetchSearch()
   }
 
   render () {
