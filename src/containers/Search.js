@@ -50,7 +50,17 @@ class Search extends Component {
 
     return (
       <div>
-        <h2>Search - Page {page_number}</h2>
+        <Flex align='center'>
+          <Box col={6}>
+            <h2>Search - Page {page_number}</h2>
+          </Box>
+          <Box col={6}>
+            <input type='text' style={{
+              fontSize: '1.5em',
+              width: '100%',
+            }}/>
+          </Box>
+        </Flex>
         <hr />
 
         <Flex>

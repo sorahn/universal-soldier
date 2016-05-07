@@ -14,7 +14,7 @@ import React from 'react'
 const app = new Koa()
 const router = new Router()
 
-const assets = serve(__dirname + '/public', )
+const assets = serve(__dirname + '/public')
 app.use(mount('/public', assets))
 
 // Assign a route from our exported route objects.
