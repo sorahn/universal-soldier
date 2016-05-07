@@ -1,21 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchSearch } from '../actions/search'
+import { fetchSearch, clearPreloadFlag } from '../actions/search'
 
 class Search extends Component {
   static fetchData ({ store }) {
-    return store.dispatch(fetchSearch())
+    const preload = true
+    return store.dispatch(fetchSearch({preload}))
   }
 
   componentWillMount () {
-    return this.props.fetchSearch()
+    if (!this.props.preload) {
+      this.props.fetchSearch()
+    }
+  }
+
+  componentDidMount () {
+    // Check if the preload flag is true, and if there are results.
+    if (this.props.preload && this.props.results) {
+      this.props.clearPreloadFlag()
+    }
   }
 
   render () {
     return (
-      <div style={{
-        paddingTop: 300
-      }}>
+      <div style={{ paddingTop: 300 }}>
         Search
 
         <ul>
@@ -31,11 +39,13 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ({
+  preload: state.search.preload,
   results: state.search.results,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchSearch: () => dispatch(fetchSearch()),
+  clearPreloadFlag: () => dispatch(clearPreloadFlag())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

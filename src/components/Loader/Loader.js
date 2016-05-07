@@ -1,5 +1,7 @@
 import React from 'react'
-import styles from './Loader.css'
+// import styles from './Loader.css'
+
+const styles = {}
 
 function Loader() {
   return (
