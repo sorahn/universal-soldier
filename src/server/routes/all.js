@@ -20,6 +20,7 @@ const checkRoute = (ctx, next) => {
   // Create the react history object.
   const history = syncHistoryWithStore(memoryHistory, store)
 
+  // Options for react-router to match the current route on the server.
   const options = {
     history,
     routes,
@@ -61,14 +62,20 @@ const fetchData = ctx => {
   const { components, params } = ctx.props
   const { store } = ctx
 
-  return new Promise((resolve, reject) => {
-    // This is the component that is matched in the routes.
-    const comp = components[components.length - 1].WrappedComponent
-    const url = ctx.request.protocol + '://' + ctx.request.get('host')
+  // This is the component that is matched in the routes.
+  const comp = components[components.length - 1].WrappedComponent
 
-    // Gotta pass the user agent through too
-    resolve(comp.fetchData({ params, store, url, headers: ctx.request.headers }))
-  })
+  const url = ctx.request.protocol + '://' + ctx.request.get('host')
+
+  // Gotta pass the user agent through too
+  const options = {
+    headers: ctx.request.headers,
+    params,
+    store,
+    url,
+  }
+
+  return new Promise(resolve => resolve(comp.fetchData(options)))
 }
 
 const render = async ctx => {

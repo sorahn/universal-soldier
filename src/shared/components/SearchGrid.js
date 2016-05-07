@@ -9,6 +9,7 @@ const statusColors = {
   specialshow: '#0099FF'
 }
 
+// Search styles stolen from streamate.
 const styles = {
   container: {
     borderBottomStyle: 'solid',
