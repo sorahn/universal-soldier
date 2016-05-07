@@ -26,10 +26,11 @@ const checkRoute = (ctx, next) => {
     location: ctx.request.url,
   }
 
+  // I think this whole setup with match is weord, but I'm not really sure
+  // how to do it better
   match(options, (error, redirect, props) => {
     // Not sure if this is working
     if (error) {
-      console.log('error')
       ctx.throw(500, error.message)
       return
     }
@@ -47,7 +48,10 @@ const checkRoute = (ctx, next) => {
     ctx.props = props
   })
 
-  return next()
+  // If the props were set, call render
+  if (ctx.props) {
+    return next()
+  }
 }
 
 const fetchData = ctx => {
