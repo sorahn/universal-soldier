@@ -2,14 +2,14 @@ import fetch from 'isomorphic-fetch'
 import * as constants from '../constants'
 import { createAction as action } from 'redux-actions'
 
-export const clearPreloadFlag = () => ({
-  type: 'CLEAR_SEARCH_PRELOAD_FLAG'
+export const clearPreloadedFlag = () => ({
+  type: 'CLEAR_SEARCH_PRELOADED_FLAG'
 })
 
-export const fetchSearch = ({preload}) => dispatch => {
+export const fetchSearch = ({ preloaded = false }) => dispatch => {
   dispatch({
     type: 'SEARCH_PENDING',
-    preload
+    preloaded
   })
 
   return fetch('http://api.naiadsystems.com/search/v1/list?results_per_page=20')

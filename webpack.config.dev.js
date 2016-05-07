@@ -4,8 +4,8 @@ export default {
   devtool: 'source-map',
   entry: [ './client.js' ],
   output: {
-    filename: '[name].js',
-    path: path.resolve('build'),
+    filename: 'bundle.js',
+    path: path.resolve('public'),
     publicPath: '/public/'
   },
   module: {

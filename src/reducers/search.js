@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action) {
         results: action.results,
       }
 
-    case 'CLEAR_SEARCH_PRELOAD_FLAG':
+    case 'CLEAR_SEARCH_PRELOADED_FLAG':
       return {
         ...state,
         preloaded: false

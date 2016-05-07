@@ -27,7 +27,7 @@ export function configureStore(history, initialState) {
     reducer,
     initialState,
     compose(
-      applyMiddleware(router(history), thunk, logger())
+      applyMiddleware(router(history), thunk)
     )
   )
 

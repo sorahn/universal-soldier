@@ -9,11 +9,18 @@
     "url": "https://github.com/StevenIseki/react-router-redux-example.git"
   },
   "scripts": {
-    "build": "npm run clean && webpack --config webpack.config.js",
+    "build:prod": "npm run clean && webpack --config webpack.config.js",
     "clean": "rm public/bundle.js && rm public/style.css && rm public/vendor.js || true",
-    "start": "nodemon -x npm run start:dev",
-    "start:prod": "NODE_ENV=prod babel-node server.js",
-    "start:dev": "babel-node dev-server.js"
+
+    "start:dev": "babel-node dev-server.js",
+
+    "build": "babel-node ./node_modules/.bin/webpack --config ./webpack.config.dev",
+
+    "server": "babel-node server.js",
+    "start": "concurrently 'npm run watch' 'npm run watch:server'",
+
+    "watch": "npm run build -- --watch",
+    "watch:server": "nodemon -x npm run server -w server.js -w src"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
@@ -44,12 +51,14 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
     "babel-register": "^6.7.2",
+    "concurrently": "^2.0.0",
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^4.0.0",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "isomorphic-fetch": "^2.2.1",
     "marked": "^0.3.5",
+    "nodemon": "^1.9.2",
     "postcss-loader": "^0.8.2",
     "request": "^2.61.0",
     "scroll-behavior": "^0.4.0",
