@@ -12,10 +12,9 @@ export const get = url => async ctx => {
     ...ctx.request.query
   }
 
-  console.log('naiad-systems - get -', ctx.request.url)
   await $get(url, query, {
       headers: {
-        'User-Agent': ctx.request.headers.userAgent
+        'User-Agent': ctx.request.headers['user-agent']
       }
     })
     .then(response => ctx.body = response)

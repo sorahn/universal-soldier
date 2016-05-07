@@ -47,7 +47,6 @@ const styles = {
 // based on your user agent. We might have to investigate using CSS modules
 // for the flexbox search layouts instead of inline styles.
 const guessColsFromUserAgent = ({ isDesktop, isMobile, isTablet }) => {
-  console.log(isDesktop, isMobile, isTablet)
   switch (true) {
     case isDesktop: return 3
     case isMobile: return 6
@@ -61,10 +60,8 @@ function SearchGrid (props, context) {
     userAgent,
   } = props
 
-  console.log(userAgent)
   const col = __SERVER__ ? guessColsFromUserAgent(userAgent) : 6
 
-  console.log('cols', col)
   return (
     <Flex wrap gutter={1}>
       {results.map(result => {

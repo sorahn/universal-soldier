@@ -64,6 +64,7 @@ const fetchData = ctx => {
     const comp = components[components.length - 1].WrappedComponent
     const url = ctx.request.protocol + '://' + ctx.request.get('host')
 
+    // Gotta pass the user agent through too
     resolve(comp.fetchData({ params, store, url, headers: ctx.request.headers }))
   })
 }

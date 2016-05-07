@@ -12,7 +12,7 @@ class Search extends Component {
     return store.dispatch(fetchSearch({ preloaded, params }, {
       method: 'GET',
       headers: {
-        'User-Agent': headers.userAgent
+        'User-Agent': headers['user-agent']
       }
     }))
   }
