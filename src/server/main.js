@@ -12,6 +12,9 @@ import path from 'path'
 import * as api from './api'
 import all from './routes/all'
 import responseTime from './helpers/response-time'
+import lruCache from 'lru-cache'
+import cash from 'koa-cash'
+import hash from 'object-hash'
 
 // Build the router
 const router = new Router()
@@ -30,9 +33,30 @@ router.get('*', ...all.actions)
 
 // Set up Koa
 const app = new Koa()
+const cache = lruCache({
+  maxAge: 30000
+})
 
 app.use(responseTime)
 app.use(convert(userAgent()))
+app.use(convert(cash({
+  hash (ctx) {
+    const {
+      headers: { 'user-agent': userAgent },
+      url,
+    } = ctx.request
+
+    // Hash the storage key bu the url, and the userAgent
+    return hash({ url, userAgent })
+  },
+  get (key, maxAge) {
+    console.log('lru-cache - get -', key)
+    return cache.get(key)
+  },
+  set (key, value) {
+    return cache.set(key, value)
+  }
+})))
 
 const assets = serve(path.resolve(__dirname + '/../../public'))
 app.use(mount('/public', assets))

@@ -54,6 +54,8 @@ const checkRoute = (ctx, next) => {
   }
 }
 
+// This will look for a `fetchData` static on the react class that the
+// router matches.  It will call that function to
 const fetchData = ctx => {
   console.log('koa: fetchData - three')
   const { components, params } = ctx.props
@@ -72,6 +74,11 @@ const fetchData = ctx => {
 const render = async ctx => {
   console.log('koa: render - two')
 
+  // this response is already cashed if `true` is returned,
+  // so this middleware will automatically serve this response from cache
+  if (await ctx.cashed()) return
+
+  // If there is no catch, fetch our data from the server (ourself)
   await fetchData(ctx)
     .then(() => {
       console.log('koa: fetchData.then - four')
@@ -81,7 +88,7 @@ const render = async ctx => {
         ...ctx.store.getState(),
 
         // Stuff the whole userAgent object into the reducers so we can use
-        // it to tru and guess the width of the client.
+        // it to try and guess the width of the client.
         userAgent: ctx.state.userAgent
       })
 
