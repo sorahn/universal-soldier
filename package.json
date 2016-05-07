@@ -9,16 +9,9 @@
     "url": "https://github.com/StevenIseki/react-router-redux-example.git"
   },
   "scripts": {
-    "build:prod": "npm run clean && webpack --config webpack.config.js",
-    "clean": "rm public/bundle.js && rm public/style.css && rm public/vendor.js || true",
-
-    "start:dev": "babel-node dev-server.js",
-
-    "build": "babel-node ./node_modules/.bin/webpack --config ./webpack.config.dev",
-
+    "build": "babel-node ./node_modules/.bin/webpack",
     "server": "babel-node server.js",
     "start": "concurrently 'npm run watch' 'npm run watch:server'",
-
     "watch": "npm run build -- --watch",
     "watch:server": "nodemon -x npm run server -w server.js -w src"
   },
@@ -39,7 +32,8 @@
     "redux": "^3.5.1",
     "redux-actions": "^0.9.1",
     "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.0.1"
+    "redux-thunk": "^2.0.1",
+    "reflexbox": "^1.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",

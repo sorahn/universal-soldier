@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
+import { Flex, Box } from 'reflexbox'
+
 import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 
 class Search extends Component {
@@ -37,29 +39,49 @@ class Search extends Component {
 
   render () {
     console.info('Search - render')
+
+    const {
+      page_number,
+      results,
+    } = this.props
+
+    const center = { textAlign: 'center' }
+
     return (
       <div>
-        <h2>Search</h2>
+        <h2>Search - Page {page_number}</h2>
         <hr />
 
         <ul>
-          {this.props.results.map((result => (
+          {results.map((result => (
             <li key={result.PerformerId}>
               {result.Nickname}
             </li>
           )))}
         </ul>
         <hr />
-        <IndexLink to='/'>Home</IndexLink>&nbsp;
-        <Link to='/page/2'>Next</Link>
+        <Flex >
+          <Box auto style={center}>
+            {page_number > 1 &&
+              <Link to={`/page/${page_number - 1}`}>Previous</Link>
+            }
+          </Box>
+          <Box auto style={center}>
+            <IndexLink to='/'>Home</IndexLink>
+          </Box>
+          <Box auto style={center}>
+            <Link to={`/page/${page_number + 1}`}>Next</Link>
+          </Box>
+        </Flex>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   preloaded: state.search.preloaded,
   results: state.search.results,
+  page_number: +props.params.page_number || 1,
 })
 
 const mapDispatchToProps = dispatch => ({
