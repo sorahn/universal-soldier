@@ -91,7 +91,7 @@ function SearchGrid (props, context) {
         const src = `//m1.nsimg.net/biopic/320x240/${result.PerformerId}`
 
         return (
-          <Box key={result.PerformerId} col={6} p={1}>
+          <Box key={result.PerformerId} sm={6} md={4} lg={3} p={1}>
             <div style={containerStyle}>
               <div style={styles.fill}>
                 <img src={src} style={styles.img} width={320} height={240} />

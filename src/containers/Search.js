@@ -66,11 +66,13 @@ class Search extends Component {
 
     const nextTo = path.normalize(`${basePath}/page/${page_number + 1}`)
 
+    const keyword = params.keyword ? `- "${params.keyword}" ` : null
+
     return (
       <div>
         <Flex align='center'>
           <Box col={6}>
-            <h2>Search - Page {page_number}</h2>
+            <h2>Search {keyword} - Page {page_number}</h2>
           </Box>
           <Box col={6}>
             <SearchBox params={params} />
