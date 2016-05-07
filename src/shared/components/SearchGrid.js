@@ -1,5 +1,6 @@
 import React from 'react'
 import { Flex, Box } from 'reflexbox'
+import { Link } from 'react-router'
 
 const statusColors = {
   goldshow: 'gold',
@@ -84,15 +85,17 @@ function SearchGrid (props, context) {
 
         return (
           <Box auto key={result.PerformerId} col={col} sm={4} md={3} lg={10 / 2} p={1}>
-            <div style={containerStyle}>
-              <div style={styles.fill}>
-                <img src={src} style={styles.img} width={320} height={240} />
+            <Link to={`/cam/${result.Nickname}`}>
+              <div style={containerStyle}>
+                <div style={styles.fill}>
+                  <img src={src} style={styles.img} width={320} height={240} />
+                </div>
+                <Flex style={styles.nameBar} justify='space-between'>
+                  <div>{result.Nickname}</div>
+                  <div>{result.Age} - {result.Country}</div>
+                </Flex>
               </div>
-              <Flex style={styles.nameBar} justify='space-between'>
-                <div>{result.Nickname}</div>
-                <div>{result.Age} - {result.Country}</div>
-              </Flex>
-            </div>
+            </Link>
           </Box>
         )
       })}
