@@ -5,8 +5,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { configureStore } from '../store'
 import routes from '../routes'
-import Html from '../components/Html'
-
+import { HTML } from '../components'
 
 const checkRoute = (ctx, next) => {
   console.log('koa: checkRoute - one')
@@ -75,14 +74,18 @@ const render = async ctx => {
     .then(() => {
       console.log('koa: fetchData.then - four')
 
-      const store = configureStore(ctx.history, ctx.store.getState())
+      const store = configureStore(ctx.history, {
+        ...ctx.store.getState(),
+        userAgent: ctx.state.userAgent
+      })
+
       const content = renderToString(
         <Provider store={store}>
           <RouterContext {...ctx.props}/>
         </Provider>
       )
 
-      const html = renderToString(<Html content={content} store={store}/>)
+      const html = renderToString(<HTML content={content} store={store}/>)
 
       ctx.body = `<!doctype html>\n${html}`
     })

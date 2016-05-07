@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 
 import { configureStore } from './src/store'
 import routes from './src/routes'
+import { FlexProvider } from './src/components'
 
 let state = window.__initialState__ || undefined
 const store = configureStore(browserHistory, state)

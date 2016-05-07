@@ -43,33 +43,28 @@ const styles = {
   }
 }
 
+// This is doing exactly what it says.  Guessing how many columns to render
+// based on your user agent. We might have to investigate using CSS modules
+// for the flexbox search layouts instead of inline styles.
+const guessColsFromUserAgent = ({ isDesktop, isMobile, isTablet }) => {
+  switch (true) {
+    case isDesktop: return 3
+    case isMobile: return 6
+    case isTablet: return 4
+  }
+}
+
 function SearchGrid (props, context) {
   const {
     results,
-    thumbnailMode,
+    userAgent,
   } = props
 
-  const singleThumbnail = thumbnailMode === 'single'
-  // @TODO - get with creatives to determine what they want the single thumbnail option to look like at larger sizes
-  const singleThumbnailColumns = {
-    sm: 12,
-    md: 12,
-    lg: 12
-  }
+  const col = __SERVER__
+    ? guessColsFromUserAgent(userAgent)
+    : 6
 
-  const multipleThumbnailColumns = {
-    sm: 6,
-    md: 4,
-    lg: 3
-  }
-
-  const columnSizes = singleThumbnail ? singleThumbnailColumns : multipleThumbnailColumns
-
-  // // This triggers the lazy loader to load images that were past offset in single thumbnail view
-  // if (!singleThumbnail) {
-  //   scrollTo(0, 1)
-  // }
-
+  console.log('cols', col)
   return (
     <Flex wrap gutter={1}>
       {results.map(result => {
@@ -91,7 +86,7 @@ function SearchGrid (props, context) {
         const src = `//m1.nsimg.net/biopic/320x240/${result.PerformerId}`
 
         return (
-          <Box key={result.PerformerId} sm={6} md={4} lg={3} p={1}>
+          <Box auto key={result.PerformerId} col={col} sm={4} md={3} lg={10 / 2} p={1}>
             <div style={containerStyle}>
               <div style={styles.fill}>
                 <img src={src} style={styles.img} width={320} height={240} />

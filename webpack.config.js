@@ -16,7 +16,8 @@ export default {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __CLIENT__: true
+      __CLIENT__: true,
+      __SERVER__: false,
     }),
   ],
 }

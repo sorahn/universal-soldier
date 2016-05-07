@@ -51,6 +51,7 @@ class Search extends Component {
       page_number,
       params,
       results,
+      userAgent,
     } = this.props
 
     const center = { textAlign: 'center' }
@@ -93,7 +94,7 @@ class Search extends Component {
         </Flex>
         <hr />
 
-        <SearchGrid results={results} />
+        <SearchGrid results={results} userAgent={userAgent} />
       </div>
     )
   }
@@ -103,6 +104,7 @@ const mapStateToProps = (state, props) => ({
   preloaded: state.search.preloaded,
   results: state.search.results,
   page_number: +props.params.page_number || 1,
+  userAgent: state.userAgent,
 })
 
 const mapDispatchToProps = dispatch => ({
