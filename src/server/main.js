@@ -3,9 +3,10 @@ import { renderToString } from 'react-dom/server'
 import { createMemoryHistory, match, RouterContext } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { Provider } from 'react-redux'
-import { configureStore } from '../store'
-import routes from '../routes'
-import { HTML } from '../components'
+
+import { configureStore } from '../shared/store'
+import routes from '../shared/routes'
+import { HTML } from './components'
 
 const checkRoute = (ctx, next) => {
   console.log('koa: checkRoute - one')

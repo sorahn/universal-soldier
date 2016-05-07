@@ -8,8 +8,8 @@ import serve from 'koa-static'
 import mount from 'koa-mount'
 import convert from 'koa-convert'
 import userAgent from 'koa-useragent'
-import * as apiRoutes from './src/api/routes'
-import main from './src/api/main'
+import * as api from './src/server/api'
+import main from './src/server/main'
 
 // Build the router
 const router = new Router()
@@ -21,7 +21,7 @@ const assign = ({ verb, route, actions }) => {
 }
 
 // Iterate over all the routes, and assign them.
-Object.keys(apiRoutes).map(i => assign(apiRoutes[i]))
+Object.keys(api).map(i => assign(api[i]))
 
 // Load the main route for everything else.
 router.get('*', ...main.actions)
