@@ -10,13 +10,14 @@ import convert from 'koa-convert'
 import userAgent from 'koa-useragent'
 import * as api from './src/server/api'
 import main from './src/server/main'
+import responseTime from './src/server/helpers/response-time'
 
 // Build the router
 const router = new Router()
 
 // Assign a route from our exported route objects.
 const assign = ({ verb, route, actions }) => {
-  console.log(verb, route, actions)
+  console.log('register route -', verb, route)
   router[verb](route, ...actions)
 }
 
@@ -28,6 +29,7 @@ router.get('*', ...main.actions)
 
 // Set up Koa
 const app = new Koa()
+app.use(responseTime)
 app.use(convert(userAgent()))
 
 const assets = serve(__dirname + '/public')

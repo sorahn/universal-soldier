@@ -75,8 +75,12 @@ const render = async ctx => {
     .then(() => {
       console.log('koa: fetchData.then - four')
 
+
       const store = configureStore(ctx.history, {
         ...ctx.store.getState(),
+
+        // Stuff the whole userAgent object into the reducers so we can use
+        // it to tru and guess the width of the client.
         userAgent: ctx.state.userAgent
       })
 
