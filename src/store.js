@@ -8,27 +8,26 @@ import {
 
 import {
   routerReducer as routing,
-  routerMiddleware as router
+  routerMiddleware,
 } from 'react-router-redux'
 
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
+import { reducer as form } from 'redux-form'
 
 import * as reducers from './reducers'
 
 export function configureStore(history, initialState) {
 
   const reducer = combineReducers({
-    ...reducers,
-    routing: routing
+    ...reducers, form, routing
   })
 
-  const middlewares = [ router(history), thunk ]
+  const middlewares = [ routerMiddleware(history), thunk ]
 
   if (__CLIENT__) {
     middlewares.push(logger({
-      collapsed: true,
-      predicate: true,
+      collapsed: true
     }))
   }
 

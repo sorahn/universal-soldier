@@ -26,7 +26,10 @@ export const searchSuccess = (results) => ({
 export const fetchSearch = ({ preloaded = false, params }) => dispatch => {
   dispatch(searchPending(preloaded))
 
-  const query = objectToQueryString(params)
+  const query = objectToQueryString({
+    ...params,
+    page_number: params.page_number || 1,
+  })
 
   return fetch(`http://api.naiadsystems.com/search/v1/list?results_per_page=24&${query}`)
     .then(req => req.json())

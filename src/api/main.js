@@ -29,11 +29,15 @@ const checkRoute = (ctx, next) => {
   match(options, (error, redirect, props) => {
     // Not sure if this is working
     if (error) {
-      return ctx.throw(500, error.message)
+      console.log('error')
+      ctx.throw(500, error.message)
+      return
     }
 
     if (redirect) {
-      return ctx.redirect(302, redirect.pathname + redirect.search)
+      ctx.redirect(redirect.pathname + redirect.search)
+      ctx.status = 302
+      return
     }
     // --
 
@@ -48,7 +52,7 @@ const checkRoute = (ctx, next) => {
 
 const fetchData = ctx => {
   console.log('koa: fetchData - three')
-  const { query, components, params } = ctx.props
+  const { components, params } = ctx.props
   const { store } = ctx
 
   return new Promise((resolve, reject) => {

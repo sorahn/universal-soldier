@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
 import { Flex, Box } from 'reflexbox'
-
-import { SearchGrid } from '../components'
+import { SearchGrid, SearchBox } from '../components'
 import { fetchSearch, clearPreloadedFlag } from '../actions/search'
+import path from 'path'
 
 class Search extends Component {
   static fetchData ({ store, params }) {
@@ -20,13 +20,18 @@ class Search extends Component {
     }
   }
 
-  componentWillReceiveProps ({ params = {} }) {
+  componentWillReceiveProps ({ params }) {
     console.info('Search - componentWillReceiveProps')
 
     if (this.props.params !== params) {
       console.info('Search - params are different')
       this.props.fetchSearch({ ...params })
     }
+  }
+
+  componentWillUpdate () {
+    console.info('Search - componentWillUpdate')
+
   }
 
   componentDidMount () {
@@ -42,11 +47,24 @@ class Search extends Component {
     console.info('Search - render')
 
     const {
+      location: { pathname },
       page_number,
+      params,
       results,
     } = this.props
 
     const center = { textAlign: 'center' }
+    const basePath = pathname.replace(/\/page\/.$/, '')
+
+    const prevTo = page_number === 2
+      ? basePath
+      : path.normalize(`${basePath}/page/${page_number - 1}`)
+
+    const previous = page_number > 1
+      ? <Link to={prevTo}>Previous</Link>
+      : null
+
+    const nextTo = path.normalize(`${basePath}/page/${page_number + 1}`)
 
     return (
       <div>
@@ -55,25 +73,20 @@ class Search extends Component {
             <h2>Search - Page {page_number}</h2>
           </Box>
           <Box col={6}>
-            <input type='text' style={{
-              fontSize: '1.5em',
-              width: '100%',
-            }}/>
+            <SearchBox params={params} />
           </Box>
         </Flex>
         <hr />
 
         <Flex>
           <Box col={4} style={center}>
-            {page_number > 1 &&
-              <Link to={`/page/${page_number - 1}`}>Previous</Link>
-            }
+            {previous}
           </Box>
           <Box col={4} style={center}>
             <IndexLink to='/'>Home</IndexLink>
           </Box>
           <Box col={4} style={center}>
-            <Link to={`/page/${page_number + 1}`}>Next</Link>
+            <Link to={nextTo}>Next</Link>
           </Box>
         </Flex>
         <hr />
