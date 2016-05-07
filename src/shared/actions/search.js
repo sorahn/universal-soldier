@@ -23,7 +23,7 @@ export const searchSuccess = (results) => ({
   results,
 })
 
-export const fetchSearch = ({ preloaded = false, params }) => dispatch => {
+export const fetchSearch = ({ preloaded = false, params }, options = {}) => dispatch => {
   dispatch(searchPending(preloaded))
 
   const query = objectToQueryString({
@@ -31,7 +31,7 @@ export const fetchSearch = ({ preloaded = false, params }) => dispatch => {
     page_number: params.page_number || 1,
   })
 
-  return fetch(`http://localhost:3000/api/search/v1/list?results_per_page=24&${query}`)
+  return fetch(`http://localhost:3000/api/search/v1/list?results_per_page=24&${query}`, options)
     .then(req => req.json())
     .then(({ Results }) => dispatch(searchSuccess(Results)))
 }

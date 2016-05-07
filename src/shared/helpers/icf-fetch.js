@@ -71,8 +71,8 @@ export const checkRequest = response => {
     .then(checkSMOK)
 }
 
-export const get = (url, data) => {
-  return $fetch(url + '?' + objectToQueryString(data))
+export const get = (url, data, options = {}) => {
+  return $fetch(url + '?' + objectToQueryString(data), options)
     .then(checkRequest)
 }
 

@@ -7,6 +7,7 @@ export default {
   output: {
     filename: 'bundle.js',
     path: path.resolve('public'),
+    publicPath: '/public/'
   },
   module: {
     loaders: [

@@ -7,9 +7,14 @@ import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 import path from 'path'
 
 class Search extends Component {
-  static fetchData ({ store, params }) {
+  static fetchData ({ store, params, headers }) {
     const preloaded = true
-    return store.dispatch(fetchSearch({ preloaded, params }))
+    return store.dispatch(fetchSearch({ preloaded, params }, {
+      method: 'GET',
+      headers: {
+        'User-Agent': headers.userAgent
+      }
+    }))
   }
 
   componentWillMount () {
