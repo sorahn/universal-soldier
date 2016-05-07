@@ -34,7 +34,7 @@ router.get('*', ...all.actions)
 // Set up Koa
 const app = new Koa()
 const cache = lruCache({
-  maxAge: 30000
+  maxAge: 30 * 1000
 })
 
 app.use(responseTime)
@@ -50,7 +50,11 @@ app.use(convert(cash({
     return hash({ url, userAgent })
   },
   get (key, maxAge) {
+<<<<<<< cec9fccf5f1b9483c46e9f03993db059b5bed971
     console.log('lru-cache - get -', key)
+=======
+    console.log('lru-cache - get -',  key)
+>>>>>>> add an lru-cache for Speedy McSpeedyface requests
     return cache.get(key)
   },
   set (key, value) {
