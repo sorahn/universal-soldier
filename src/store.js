@@ -23,11 +23,20 @@ export function configureStore(history, initialState) {
     routing: routing
   })
 
+  const middlewares = [ router(history), thunk ]
+
+  if (__CLIENT__) {
+    middlewares.push(logger({
+      collapsed: true,
+      predicate: true,
+    }))
+  }
+
   const store = createStore(
     reducer,
     initialState,
     compose(
-      applyMiddleware(router(history), thunk)
+      applyMiddleware(...middlewares)
     )
   )
 

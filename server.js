@@ -1,3 +1,6 @@
+global.__CLIENT__ = false
+global.__SERVER__ = true
+
 import Koa from 'koa'
 import Router from 'koa-router'
 import serve from 'koa-static'

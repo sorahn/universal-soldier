@@ -1,4 +1,5 @@
 import path from 'path'
+import webpack from 'webpack'
 
 export default {
   devtool: 'source-map',
@@ -13,4 +14,9 @@ export default {
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      __CLIENT__: true
+    }),
+  ],
 }

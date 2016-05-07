@@ -9,12 +9,16 @@ class Search extends Component {
   }
 
   componentWillMount () {
+    console.info('Search - componentWillMount')
+
     if (!this.props.preloaded) {
       this.props.fetchSearch()
     }
   }
 
   componentDidMount () {
+    console.info('Search - componentDidMount')
+
     // Check if the preload flag is true, and if there are results.
     if (this.props.preloaded && this.props.results) {
       this.props.clearPreloadedFlag()
@@ -22,6 +26,8 @@ class Search extends Component {
   }
 
   render () {
+    console.info('Search - render')
+
     return (
       <div style={{ paddingTop: 300 }}>
         Search
