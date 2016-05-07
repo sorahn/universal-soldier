@@ -1,6 +1,8 @@
 import React from 'react'
-import styles from './PackageItem.css'
+// import styles from './PackageItem.css'
 import marked from 'marked'
+
+const styles = {}
 
 function PackageItem(props) {
 

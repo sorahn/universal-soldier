@@ -1,2 +1,5 @@
 node_modules
-.DS_Storepublic
+.DS_Store
+public
+npm-debug.log
+build
