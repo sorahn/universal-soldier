@@ -35,7 +35,7 @@ const assign = ({ verb, route, actions }) => {
 Object.keys(apiRoutes).map(i => assign(apiRoutes[i]))
 
 const checkRoute = (ctx, next) => {
-  console.log('one')
+  console.log('koa: checkRoute - one')
 
   // Creates a history object in node memory
   const memoryHistory = createMemoryHistory(ctx.request.path)
@@ -72,7 +72,7 @@ const checkRoute = (ctx, next) => {
 }
 
 const fetchData = (ctx) => {
-  console.log('three')
+  console.log('koa: fetchData - three')
   const { query, components, params } = ctx.props
   const { store } = ctx
 
@@ -86,10 +86,12 @@ const fetchData = (ctx) => {
 }
 
 const render = async ctx => {
-  console.log('two')
+  console.log('koa: render - two')
+
   await fetchData(ctx)
     .then(() => {
-      console.log('four')
+      console.log('koa: fetchData.then - four')
+
       const store = configureStore(ctx.history, ctx.store.getState())
       const content = renderToString(
         <Provider store={store}>

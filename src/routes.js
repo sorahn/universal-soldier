@@ -7,7 +7,7 @@ import { App, Search } from './containers'
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Search} />
-    <Route path="/page/:page" component={Search} />
+    <Route path="/page/:page_number" component={Search} />
   </Route>
 )
 

@@ -1,18 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link, IndexLink } from 'react-router'
 import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 
 class Search extends Component {
-  static fetchData ({ store }) {
+  static fetchData ({ store, params }) {
     const preloaded = true
-    return store.dispatch(fetchSearch({ preloaded }))
+    return store.dispatch(fetchSearch({ preloaded, params }))
   }
 
   componentWillMount () {
     console.info('Search - componentWillMount')
 
     if (!this.props.preloaded) {
-      this.props.fetchSearch()
+      this.props.fetchSearch({ ...this.props.params })
+    }
+  }
+
+  componentWillReceiveProps ({ params = {} }) {
+    console.info('Search - componentWillReceiveProps')
+
+    if (this.props.params !== params) {
+      console.info('Search - params are different')
+      this.props.fetchSearch({ ...params })
     }
   }
 
@@ -27,10 +37,10 @@ class Search extends Component {
 
   render () {
     console.info('Search - render')
-
     return (
-      <div style={{ paddingTop: 300 }}>
-        Search
+      <div>
+        <h2>Search</h2>
+        <hr />
 
         <ul>
           {this.props.results.map((result => (
@@ -39,6 +49,9 @@ class Search extends Component {
             </li>
           )))}
         </ul>
+        <hr />
+        <IndexLink to='/'>Home</IndexLink>&nbsp;
+        <Link to='/page/2'>Next</Link>
       </div>
     )
   }
@@ -50,7 +63,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSearch: () => dispatch(fetchSearch()),
+  fetchSearch: (params) => dispatch(fetchSearch({ params })),
   clearPreloadedFlag: () => dispatch(clearPreloadedFlag())
 })
 
