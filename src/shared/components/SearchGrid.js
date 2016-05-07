@@ -61,6 +61,12 @@ function SearchGrid (props, context) {
     userAgent,
   } = props
 
+  // This is the best argument I have against only inline styles, and
+  // server-side rendering.  With out using something that actually injects
+  // a real stylesheet into the DOM then the number of columns to display
+  // comes from javascript, and cannot be accurately estimated from the
+  // user agent.  If this were a real CSS implemtation of grid columns, the
+  // server would be agnostic of the columns.
   const col = __SERVER__ ? guessColsFromUserAgent(userAgent) : 6
 
   return (
