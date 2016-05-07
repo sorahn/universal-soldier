@@ -3,11 +3,10 @@ import webpack from 'webpack'
 
 export default {
   devtool: 'source-map',
-  entry: [ './client.js' ],
+  entry: [ './src/client/app.js' ],
   output: {
     filename: 'bundle.js',
     path: path.resolve('public'),
-    publicPath: '/public/'
   },
   module: {
     loaders: [

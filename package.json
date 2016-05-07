@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "babel-node ./node_modules/.bin/webpack",
+    "prestart": "rm -r public",
     "server": "babel-node server.js",
     "start": "concurrently 'npm run watch' 'npm run watch:server'",
     "watch": "npm run build -- --watch",

@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import { configureStore } from './src/shared/store'
-import routes from './src/shared/routes'
+import { configureStore } from '../shared/store'
+import routes from '../shared/routes'
 
 let state = window.__initialState__ || undefined
 const store = configureStore(browserHistory, state)
