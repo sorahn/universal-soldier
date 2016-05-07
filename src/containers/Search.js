@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
 import { Flex, Box } from 'reflexbox'
 
+import { SearchGrid } from '../components'
 import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 
 class Search extends Component {
@@ -52,27 +53,22 @@ class Search extends Component {
         <h2>Search - Page {page_number}</h2>
         <hr />
 
-        <ul>
-          {results.map((result => (
-            <li key={result.PerformerId}>
-              {result.Nickname}
-            </li>
-          )))}
-        </ul>
-        <hr />
-        <Flex >
-          <Box auto style={center}>
+        <Flex>
+          <Box col={4} style={center}>
             {page_number > 1 &&
               <Link to={`/page/${page_number - 1}`}>Previous</Link>
             }
           </Box>
-          <Box auto style={center}>
+          <Box col={4} style={center}>
             <IndexLink to='/'>Home</IndexLink>
           </Box>
-          <Box auto style={center}>
+          <Box col={4} style={center}>
             <Link to={`/page/${page_number + 1}`}>Next</Link>
           </Box>
         </Flex>
+        <hr />
+
+        <SearchGrid results={results} />
       </div>
     )
   }
