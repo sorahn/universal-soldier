@@ -1,5 +1,6 @@
 import path from 'path'
 import webpack from 'webpack'
+import CompressionPlugin from 'compression-webpack-plugin'
 
 export default {
   devtool: 'source-map',
@@ -19,5 +20,6 @@ export default {
       __CLIENT__: true,
       __SERVER__: false,
     }),
+    new CompressionPlugin()
   ],
 }

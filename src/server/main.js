@@ -34,7 +34,7 @@ router.get('*', ...all.actions)
 // Set up Koa
 const app = new Koa()
 const cache = lruCache({
-  maxAge: 30 * 1000
+  maxAge: 30 * 1000 // 30 second cache
 })
 
 app.use(responseTime)
@@ -46,16 +46,24 @@ app.use(convert(cash({
       url,
     } = ctx.request
 
-    // Hash the storage key bu the url, and the userAgent
-    return hash({ url, userAgent })
+    const options = {
+      algorithm: 'md5',
+      encoding: 'base64'
+    }
+
+    // Hash the storage key by the url, and the userAgent
+    return url + ' - ' + hash({ url, userAgent }, options)
   },
   get (key, maxAge) {
-    console.log('lru-cache - get -', key)
-    return cache.get(key)
+    return cache.get(key, )
   },
   set (key, value) {
     return cache.set(key, value)
+  },
+  dispose (key) {
+    console.log('LRU - Dropping Key: ', key)
   }
+
 })))
 
 const assets = serve(path.resolve(__dirname + '/../../public'))

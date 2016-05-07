@@ -65,6 +65,8 @@ const fetchData = ctx => {
   // This is the component that is matched in the routes.
   const comp = components[components.length - 1].WrappedComponent
 
+  const { fetchData = options => options } = comp
+
   const url = ctx.request.protocol + '://' + ctx.request.get('host')
 
   // Gotta pass the user agent through too
@@ -75,7 +77,7 @@ const fetchData = ctx => {
     url,
   }
 
-  return new Promise(resolve => resolve(comp.fetchData(options)))
+  return new Promise(resolve => resolve(fetchData(options)))
 }
 
 const render = async ctx => {
@@ -83,7 +85,10 @@ const render = async ctx => {
 
   // this response is already cashed if `true` is returned,
   // so this middleware will automatically serve this response from cache
-  if (await ctx.cashed()) return
+  if (await ctx.cashed()) {
+    console.log('LRU - HIT ', ctx.url)
+    return
+  }
 
   // If there is no catch, fetch our data from the server (ourself)
   await fetchData(ctx)

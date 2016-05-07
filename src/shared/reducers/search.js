@@ -12,13 +12,13 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         pending: true,
-        preloaded: action.preloaded,
       }
 
     case 'SEARCH_SUCCESS':
       return {
         ...state,
         pending: false,
+        preloaded: action.preloaded,
         results: action.results,
       }
 

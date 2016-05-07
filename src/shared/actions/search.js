@@ -13,18 +13,18 @@ export const clearPreloadedFlag = () => ({
   type: 'CLEAR_SEARCH_PRELOADED_FLAG'
 })
 
-export const searchPending = (preloaded) => ({
-  type: 'SEARCH_PENDING',
+export const searchPending = () => ({
+  type: 'SEARCH_PENDING'
+})
+
+export const searchSuccess = (results, preloaded) => ({
+  type: 'SEARCH_SUCCESS',
+  results,
   preloaded,
 })
 
-export const searchSuccess = (results) => ({
-  type: 'SEARCH_SUCCESS',
-  results,
-})
-
 export const fetchSearch = ({ preloaded = false, params }, options = {}) => dispatch => {
-  dispatch(searchPending(preloaded))
+  dispatch(searchPending())
 
   const query = objectToQueryString({
     ...params,
@@ -33,5 +33,5 @@ export const fetchSearch = ({ preloaded = false, params }, options = {}) => disp
 
   return fetch(`http://localhost:3000/api/search/v1/list?results_per_page=24&${query}`, options)
     .then(req => req.json())
-    .then(({ Results }) => dispatch(searchSuccess(Results)))
+    .then(({ Results }) => dispatch(searchSuccess(Results, preloaded)))
 }

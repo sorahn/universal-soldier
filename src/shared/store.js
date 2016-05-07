@@ -27,7 +27,8 @@ export function configureStore(history, initialState) {
 
   if (__CLIENT__) {
     middlewares.push(logger({
-      collapsed: true
+      collapsed: true,
+      predicate: true
     }))
   }
 
