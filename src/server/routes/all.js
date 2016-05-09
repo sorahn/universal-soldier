@@ -33,15 +33,18 @@ const checkRoute = (ctx, next) => {
     // Not sure if this is working
     if (error) {
       ctx.throw(500, error.message)
+      console.log('throw')
       return
     }
+    // --
 
+    // matching '/search' with no parameter is marked in
+    // react-router as a redirect.  This happens here.
     if (redirect) {
       ctx.redirect(redirect.pathname + redirect.search)
       ctx.status = 302
       return
     }
-    // --
 
     // The next function that runs needs these 3 objects
     ctx.history = memoryHistory
@@ -94,7 +97,6 @@ const render = async ctx => {
   await fetchData(ctx)
     .then(() => {
       console.log('koa: fetchData.then - four')
-
 
       const store = configureStore(ctx.history, {
         ...ctx.store.getState(),

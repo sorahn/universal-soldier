@@ -40,30 +40,17 @@ const cache = lruCache({
 app.use(responseTime)
 app.use(convert(userAgent()))
 app.use(convert(cash({
-  hash (ctx) {
+  hash: (ctx) => {
     const {
       headers: { 'user-agent': userAgent },
       url,
     } = ctx.request
 
-    const options = {
-      algorithm: 'md5',
-      encoding: 'base64'
-    }
-
     // Hash the storage key by the url, and the userAgent
-    return url + ' - ' + hash({ url, userAgent }, options)
+    return hash({ url, userAgent })
   },
-  get (key, maxAge) {
-    return cache.get(key, )
-  },
-  set (key, value) {
-    return cache.set(key, value)
-  },
-  dispose (key) {
-    console.log('LRU - Dropping Key: ', key)
-  }
-
+  get: (key, maxAge) =>  cache.get(key, maxAge),
+  set: (key, value) => cache.set(key, value),
 })))
 
 const assets = serve(path.resolve(__dirname + '/../../public'))
