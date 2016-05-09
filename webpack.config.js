@@ -1,6 +1,7 @@
 import path from 'path'
 import webpack from 'webpack'
 import CompressionPlugin from 'compression-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 export default {
   devtool: 'source-map',
@@ -20,6 +21,9 @@ export default {
       __CLIENT__: true,
       __SERVER__: false,
     }),
+    new CopyWebpackPlugin([
+      { from: 'node_modules/normalize-css/normalize.css', to: '.'}
+    ]),
     new CompressionPlugin()
   ],
 }

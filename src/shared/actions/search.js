@@ -27,11 +27,12 @@ export const fetchSearch = ({ preloaded = false, params }, options = {}) => disp
   dispatch(searchPending())
 
   const query = objectToQueryString({
+    results_per_page: 24,
     ...params,
     page_number: params.page_number || 1,
   })
 
-  return fetch(`http://localhost:3000/api/search/v1/list?results_per_page=24&${query}`, options)
+  return fetch(`http://localhost:3000/api/search/v1/list?${query}`, options)
     .then(req => req.json())
     .then(({ Results }) => dispatch(searchSuccess(Results, preloaded)))
 }

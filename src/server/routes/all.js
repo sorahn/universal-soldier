@@ -27,7 +27,7 @@ const checkRoute = (ctx, next) => {
     location: ctx.request.url,
   }
 
-  // I think this whole setup with match is weord, but I'm not really sure
+  // I think this whole setup with match is weird, but I'm not really sure
   // how to do it better
   match(options, (error, redirect, props) => {
     // Not sure if this is working
