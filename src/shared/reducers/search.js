@@ -1,7 +1,7 @@
 import * as constants from '../constants'
 
 const initialState = {
-  preloaded: true,
+  preloaded: false,
   pending: false,
   results: [],
 }

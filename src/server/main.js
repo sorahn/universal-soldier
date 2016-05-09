@@ -34,11 +34,13 @@ router.get('*', ...all.actions)
 // Set up Koa
 const app = new Koa()
 const cache = lruCache({
-  maxAge: 30 * 1000 // 30 second cache
+  maxAge: 1000 // 30 second cache
 })
 
 app.use(responseTime)
 app.use(convert(userAgent()))
+
+
 app.use(convert(cash({
   hash: (ctx) => {
     const {

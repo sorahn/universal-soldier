@@ -80,6 +80,10 @@ const fetchData = ctx => {
     url,
   }
 
+  if (ctx.request.query.preload === 'false') {
+    return new Promise(resolve => resolve())
+  }
+
   return new Promise(resolve => resolve(fetchData(options)))
 }
 
