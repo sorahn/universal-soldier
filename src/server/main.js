@@ -34,7 +34,7 @@ router.get('*', ...all.actions)
 // Set up Koa
 const app = new Koa()
 const cache = lruCache({
-  maxAge: 1000 // 30 second cache
+  maxAge: 60 * 1000 // 1 minute cache
 })
 
 app.use(responseTime)
