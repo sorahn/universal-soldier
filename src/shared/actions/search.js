@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch'
 import * as constants from '../constants'
-import { createAction as action } from 'redux-actions'
 
 // take an object, and reduce it to a query string for sending GET params.
 export const objectToQueryString = (object = {}) => {
