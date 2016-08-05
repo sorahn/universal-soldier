@@ -29,7 +29,7 @@ export const fetchSearch = ({ preloaded = false, params }, options) => dispatch 
   const query = objectToQueryString({
     ...params,
     page_number: params.page_number || 1,
-    results_per_page: 24,
+    results_per_page: params.results_per_page || 24,
   })
 
   return fetch(`http://localhost:3000/api/search/v1/list?${query}`, options)

@@ -86,11 +86,11 @@ const loadData = async (ctx, next) => {
   // This is the component that is matched in the routes.  We're going to look
   // for a static method called 'fetchData' on this component to load the
   // data on the server.
-  const comp = components[components.length - 1].WrappedComponent
+  const comp = components[components.length - 1].WrappedComponent || {}
 
-  // Set a default function that just returns the options you feed into it if
-  // there is no fetchData method on the component
-  const { fetchData = options => options } = comp
+  // Set a default function that just resolves a promise with the options you
+  // feed into it if there is no fetchData method on the component
+  const { fetchData = options => Promise.resolve(options) } = comp
 
   const searchParams = {
     params,
