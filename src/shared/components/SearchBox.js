@@ -33,7 +33,7 @@ const formConfig = {
 
 const mapStateToForm = (state, props) => ({
   initialValues: {
-    keyword: props.params.keyword
+    keyword: props.params.keyword || ''
   }
 })
 

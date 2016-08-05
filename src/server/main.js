@@ -8,6 +8,7 @@ import serve from 'koa-static'
 import mount from 'koa-mount'
 import convert from 'koa-convert'
 import userAgent from 'koa-useragent'
+import kcors from 'kcors'
 import path from 'path'
 import * as api from './api'
 import all from './routes/all'
@@ -39,7 +40,7 @@ const cache = lruCache({
 
 app.use(responseTime)
 app.use(convert(userAgent()))
-
+app.use(kcors())
 
 app.use(convert(cash({
   hash: (ctx) => {
