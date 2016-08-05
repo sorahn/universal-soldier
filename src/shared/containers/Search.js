@@ -12,13 +12,13 @@ class Search extends Component {
     return store.dispatch(fetchSearch({ preloaded, params }, {
       method: 'GET',
       headers: {
-        'User-Agent': headers['user-agent']
+        'user-agent': headers['user-agent']
       }
     }))
   }
 
   componentWillMount () {
-    console.info('Search - componentWillMount')
+    console.log('Search - componentWillMount')
 
     if (!this.props.preloaded && !this.props.results.length) {
       this.props.fetchSearch({ ...this.props.params, preloaded: false })
@@ -26,7 +26,7 @@ class Search extends Component {
   }
 
   componentWillReceiveProps ({ params }) {
-    console.info('Search - componentWillReceiveProps')
+    console.log('Search - componentWillReceiveProps')
 
     if (this.props.params !== params) {
       console.info('Search - params are different')
@@ -35,12 +35,12 @@ class Search extends Component {
   }
 
   componentWillUpdate () {
-    console.info('Search - componentWillUpdate')
+    console.log('Search - componentWillUpdate')
 
   }
 
   componentDidMount () {
-    console.info('Search - componentDidMount')
+    console.log('Search - componentDidMount')
 
     // Check if the preload flag is true, and if there are results.
     if (this.props.preloaded && this.props.results.length) {
@@ -49,7 +49,7 @@ class Search extends Component {
   }
 
   render () {
-    console.info('Search - render')
+    console.log('Search - render')
 
     const {
       location: { pathname },
@@ -90,9 +90,11 @@ class Search extends Component {
           <Box col={4} style={center}>
             {previous}
           </Box>
+
           <Box col={4} style={center}>
             <IndexLink to='/'>Home</IndexLink>
           </Box>
+
           <Box col={4} style={center}>
             <Link to={nextTo}>Next</Link>
           </Box>

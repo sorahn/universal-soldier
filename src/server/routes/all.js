@@ -76,6 +76,11 @@ const loadData = async (ctx, next) => {
     store,
   } = ctx
 
+  // Just run the next router handler if we're not preloading any data.
+  if (request.query.preload === 'false') {
+    return next()
+  }
+
   const url = `${request.protocol}://${request.get('host')}`
 
   // This is the component that is matched in the routes.
@@ -91,11 +96,6 @@ const loadData = async (ctx, next) => {
     params,
     store,
     url,
-  }
-
-  // Just run the next router handler if we're not preloading any data.
-  if (request.query.preload === 'false') {
-    return next()
   }
 
   // Fetch the data, then return the next route handler.
