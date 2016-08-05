@@ -22,16 +22,17 @@ export const searchSuccess = (results, preloaded) => ({
   preloaded,
 })
 
-// @TODO add redux-promise-middleware
 export const fetchSearch = ({ preloaded = false, params }, options) => dispatch => {
+  const defaultSearchParams = {
+    page_number: 1,
+    results_per_page: 24,
+  }
+
+  // Spread out the defaults, then spread out the rest of the params.
+  const query = objectToQueryString({ ...defaultSearchParams, ...params, })
+
+  // @TODO add redux-promise-middleware
   dispatch(searchPending())
-
-  const query = objectToQueryString({
-    ...params,
-    page_number: params.page_number || 1,
-    results_per_page: params.results_per_page || 24,
-  })
-
   return fetch(`http://localhost:3000/api/search/v1/list?${query}`, options)
     .then(req => req.json())
     .then(({ Results }) => dispatch(searchSuccess(Results, preloaded)))
