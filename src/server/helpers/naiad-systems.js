@@ -21,7 +21,7 @@ export const get = url => async ctx => {
 
   await $get(url, query, {
       headers: {
-        'User-Agent': ctx.request.headers['user-agent']
+        'user-agent': ctx.request.headers['user-agent']
       }
     })
     .then(response => ctx.body = response)

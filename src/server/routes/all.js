@@ -8,8 +8,14 @@ import { configureStore } from '../../shared/store'
 import routes from '../../shared/routes'
 import { HTML } from '../components'
 
-const checkRoute = (ctx, next) => {
-  console.log('koa: checkRoute - one')
+const matchRoute = async (ctx, next) => {
+  console.log('koa: step 1 - match route')
+
+  // Request cached? All done.
+  if (await ctx.cashed()) {
+    console.log('koa: step 2 - cache hit - ', ctx.url)
+    return
+  }
 
   // Creates a history object in node memory
   const memoryHistory = createMemoryHistory(ctx.request.path)
@@ -30,19 +36,20 @@ const checkRoute = (ctx, next) => {
   // I think this whole setup with match is weird, but I'm not really sure
   // how to do it better
   match(options, (error, redirect, props) => {
-    // Not sure if this is working
+
+    // Error! *esplode*
     if (error) {
-      ctx.throw(500, error.message)
+      ctx.status = 500
+      ctx.throw(error.message)
       console.log('throw')
       return
     }
-    // --
 
     // matching '/search' with no parameter is marked in
     // react-router as a redirect.  This happens here.
     if (redirect) {
-      ctx.redirect(redirect.pathname + redirect.search)
       ctx.status = 302
+      ctx.redirect(redirect.pathname + redirect.search)
       return
     }
 
@@ -52,7 +59,7 @@ const checkRoute = (ctx, next) => {
     ctx.props = props
   })
 
-  // If the props were set, call render
+  // If the props were set, we can proceed.
   if (ctx.props) {
     return next()
   }
@@ -60,74 +67,65 @@ const checkRoute = (ctx, next) => {
 
 // This will look for a `fetchData` static on the react class that the
 // router matches.  It will call that function to
-const fetchData = ctx => {
-  console.log('koa: fetchData - three')
-  const { components, params } = ctx.props
-  const { store } = ctx
+const loadData = async (ctx, next) => {
+  console.log('koa: step 2 - loadData')
+
+  const {
+    props: { components, params },
+    request,
+    store,
+  } = ctx
+
+  const url = `${request.protocol}://${request.get('host')}`
 
   // This is the component that is matched in the routes.
   const comp = components[components.length - 1].WrappedComponent
 
+  // Set a default function that just returns the options you feed into it if
+  // there is no fetchData method on the component
   const { fetchData = options => options } = comp
-
-  const url = ctx.request.protocol + '://' + ctx.request.get('host')
 
   // Gotta pass the user agent through too
   const options = {
-    headers: ctx.request.headers,
+    headers: request.headers,
     params,
     store,
     url,
   }
 
-  if (ctx.request.query.preload === 'false') {
-    return new Promise(resolve => resolve())
+  // Just run the next router handler if we're not preloading any data.
+  if (request.query.preload === 'false') {
+    return next()
   }
 
-  return new Promise(resolve => resolve(fetchData(options)))
+  // Fetch the data, then return the next route handler.
+  return await fetchData(options).then(() => next())
 }
 
 const render = async ctx => {
-  console.log('koa: render - two')
+  console.log('koa: step 3 - render')
 
-  // this response is already cashed if `true` is returned,
-  // so this middleware will automatically serve this response from cache
-  if (await ctx.cashed()) {
-    console.log('LRU - HIT ', ctx.url)
-    return
-  }
+  const store = configureStore(ctx.history, {
+    ...ctx.store.getState(),
 
-  // If there is no catch, fetch our data from the server (ourself)
-  await fetchData(ctx)
-    .then(() => {
-      console.log('koa: fetchData.then - four')
+    // Stuff the whole userAgent object into the reducers so we can use
+    // it to try and guess the width of the client.
+    userAgent: ctx.state.userAgent
+  })
 
-      const store = configureStore(ctx.history, {
-        ...ctx.store.getState(),
+  const content = renderToString(
+    <Provider store={store}>
+      <RouterContext {...ctx.props} />
+    </Provider>
+  )
 
-        // Stuff the whole userAgent object into the reducers so we can use
-        // it to try and guess the width of the client.
-        userAgent: ctx.state.userAgent
-      })
+  const html = renderToString(<HTML content={content} store={store}/>)
 
-      const content = renderToString(
-        <Provider store={store}>
-          <RouterContext {...ctx.props}/>
-        </Provider>
-      )
-
-      const html = renderToString(<HTML content={content} store={store}/>)
-
-      ctx.body = `<!doctype html>\n${html}`
-    })
-    .catch(function (error) {
-      /* do something with error */
-      console.log(error.stack);
-    })
+  ctx.body = `<!doctype html>\n${html}`
 }
 
 export default {
   verb: 'get',
   route: '*',
-  actions: [ checkRoute, render ]
+  actions: [ matchRoute, loadData, render ]
 }
