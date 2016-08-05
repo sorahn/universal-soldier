@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
 import { Flex, Box } from 'reflexbox'
-import { SearchGrid, SearchBox } from '../components'
+import { SearchGrid, SearchBox } from '../components/search'
 import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 import path from 'path'
 
 class Search extends Component {
   static fetchData ({ store, params, headers }) {
-    const preloaded = true
-    return store.dispatch(fetchSearch({ preloaded, params }, {
+    return store.dispatch(fetchSearch({ params, preloaded: true }, {
       method: 'GET',
       headers: {
         'user-agent': headers['user-agent']
@@ -21,7 +20,7 @@ class Search extends Component {
     console.log('Search - componentWillMount')
 
     if (!this.props.preloaded && !this.props.results.length) {
-      this.props.fetchSearch({ ...this.props.params, preloaded: false })
+      this.props.fetchSearch({ ...this.props.params })
     }
   }
 

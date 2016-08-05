@@ -5,7 +5,7 @@ import { push } from 'react-router-redux'
 import { reduxForm } from 'redux-form'
 import pick from 'lodash/pick'
 
-import { INPUT_PROPS } from '../constants/inputs'
+import { INPUT_PROPS } from '../../constants/inputs'
 
 const styles = {
   input: {
@@ -17,7 +17,11 @@ const styles = {
 function SearchBox (props) {
   return (
     <form onSubmit={props.handleSubmit(props.submitCallback)}>
-      <input type='text' style={styles.input} {...pick(props.fields.keyword, INPUT_PROPS) } />
+      <input
+        style={styles.input}
+        type='text'
+        {...pick(props.fields.keyword, INPUT_PROPS) }
+      />
     </form>
   )
 }

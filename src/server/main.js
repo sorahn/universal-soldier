@@ -1,7 +1,6 @@
 global.__CLIENT__ = false
 global.__SERVER__ = true
 
-import React from 'react'
 import Koa from 'koa'
 import Router from 'koa-router'
 import serve from 'koa-static'
@@ -10,12 +9,13 @@ import convert from 'koa-convert'
 import userAgent from 'koa-useragent'
 import kcors from 'kcors'
 import path from 'path'
-import * as api from './api'
-import all from './routes/all'
-import responseTime from './helpers/response-time'
 import lruCache from 'lru-cache'
 import cash from 'koa-cash'
 import hash from 'object-hash'
+
+import * as api from './api'
+import all from './routes/all'
+import responseTime from './helpers/response-time'
 
 // Build the router
 const router = new Router()
