@@ -83,20 +83,27 @@ const loadData = async (ctx, next) => {
 
   const url = `${request.protocol}://${request.get('host')}`
 
-  // This is the component that is matched in the routes.
+  // This is the component that is matched in the routes.  We're going to look
+  // for a static method called 'fetchData' on this component to load the
+  // data on the server.
   const comp = components[components.length - 1].WrappedComponent
 
   // Set a default function that just returns the options you feed into it if
   // there is no fetchData method on the component
   const { fetchData = options => options } = comp
 
-  // Gotta pass the user agent through too
-  const options = {
-    headers: request.headers,
+  const searchParams = {
     params,
-    store,
-    url,
+    preloaded: true
   }
+
+  const fetchOptions = {
+    headers: {
+      'user-agent': request.headers['user-agent']
+    }
+  }
+
+  const options = { fetchOptions, searchParams, store }
 
   // Fetch the data, then return the next route handler.
   return await fetchData(options).then(() => next())

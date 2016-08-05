@@ -17,21 +17,6 @@ import * as api from './api'
 import all from './routes/all'
 import responseTime from './helpers/response-time'
 
-// Build the router
-const router = new Router()
-
-// Assign a route from our exported route objects.
-const assign = ({ verb, route, actions }) => {
-  console.log('register route -', verb, route)
-  router[verb](route, ...actions)
-}
-
-// Iterate over all the routes, and assign them.
-Object.keys(api).map(i => assign(api[i]))
-
-// Load the main route for everything else.
-router.get('*', ...all.actions)
-
 // Set up Koa
 const app = new Koa()
 const cache = lruCache({
@@ -58,6 +43,22 @@ app.use(convert(cash({
 
 const assets = serve(path.resolve(__dirname + '/../../public'))
 app.use(mount('/public', assets))
+
+
+// Build the router
+const router = new Router()
+
+// Assign a route from our exported route objects.
+const assign = ({ verb, route, actions }) => {
+  console.log('register route -', verb, route)
+  router[verb](route, ...actions)
+}
+
+// Iterate over all the routes, and assign them.
+Object.keys(api).map(i => assign(api[i]))
+
+// Load the main route for everything else.
+router.get('*', ...all.actions)
 
 // Tell koa to use the routes.
 app.use(router.routes())

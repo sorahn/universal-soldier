@@ -7,20 +7,19 @@ import { fetchSearch, clearPreloadedFlag } from '../actions/search'
 import path from 'path'
 
 class Search extends Component {
-  static fetchData ({ store, params, headers }) {
-    return store.dispatch(fetchSearch({ params, preloaded: true }, {
-      method: 'GET',
-      headers: {
-        'user-agent': headers['user-agent']
-      }
-    }))
+  static fetchData ({ store, searchParams, fetchOptions }) {
+    return store.dispatch(fetchSearch(searchParams, fetchOptions))
   }
 
+  // If there is no preloaded flag, and no results, then fetch them.  Otherwise
+  // just clear the flag
   componentWillMount () {
     console.log('Search - componentWillMount')
 
     if (!this.props.preloaded && !this.props.results.length) {
       this.props.fetchSearch({ ...this.props.params })
+    } else {
+      this.props.clearPreloadedFlag()
     }
   }
 
@@ -40,11 +39,6 @@ class Search extends Component {
 
   componentDidMount () {
     console.log('Search - componentDidMount')
-
-    // Check if the preload flag is true, and if there are results.
-    if (this.props.preloaded && this.props.results.length) {
-      this.props.clearPreloadedFlag()
-    }
   }
 
   render () {
