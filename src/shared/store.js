@@ -1,43 +1,28 @@
-import React from 'react'
-import {
-  createStore,
-  combineReducers,
-  compose,
-  applyMiddleware
-} from 'redux'
-
-import {
-  routerReducer as routing,
-  routerMiddleware,
-} from 'react-router-redux'
-
+import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
-import logger from 'redux-logger'
-import { reducer as form } from 'redux-form'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { routerMiddleware } from 'react-router-redux'
 
 import * as reducers from './reducers'
 
 export function configureStore(history, initialState) {
 
-  const reducer = combineReducers({
-    ...reducers, form, routing
-  })
-
+  const reducer = combineReducers({ ...reducers })
   const middlewares = [ routerMiddleware(history), thunk ]
 
   if (__CLIENT__) {
-    middlewares.push(logger({
+    const logger = createLogger({
       collapsed: true,
       predicate: true
-    }))
+    })
+
+    middlewares.push(logger)
   }
 
   const store = createStore(
     reducer,
     initialState,
-    compose(
-      applyMiddleware(...middlewares)
-    )
+    applyMiddleware(...middlewares)
   )
 
   return store

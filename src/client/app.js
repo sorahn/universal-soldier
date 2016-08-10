@@ -7,7 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { configureStore } from '../shared/store'
 import routes from '../shared/routes'
 
-let state = window.__initialState__ || undefined
+const state = window.__initialState__ || undefined
 const store = configureStore(browserHistory, state)
 const history = syncHistoryWithStore(browserHistory, store)
 
