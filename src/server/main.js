@@ -15,7 +15,7 @@ import hash from 'object-hash'
 
 import * as api from './api'
 import all from './routes/all'
-import responseTime from './helpers/response-time'
+import responseTime from './middleware/response-time'
 
 // Set up Koa
 const app = new Koa()

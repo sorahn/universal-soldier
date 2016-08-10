@@ -4,16 +4,18 @@ import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import { configureStore } from '../shared/store'
-import routes from '../shared/routes'
+import { configureStore } from './store'
+import routes from './routes'
 
 const state = window.__initialState__ || undefined
 const store = configureStore(browserHistory, state)
 const history = syncHistoryWithStore(browserHistory, store)
 
-render(
+
+const App = () => (
   <Provider store={store}>
     <Router history={history} routes={routes} />
-  </Provider>,
-  document.getElementById('mount')
+  </Provider>
 )
+
+render(<App />, document.getElementById('mount'))

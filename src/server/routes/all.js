@@ -4,8 +4,8 @@ import { createMemoryHistory, match, RouterContext } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import { Provider } from 'react-redux'
 
-import { configureStore } from '../../shared/store'
-import routes from '../../shared/routes'
+import { configureStore } from '../../client/store'
+import routes from '../../client/routes'
 import { HTML } from '../components'
 
 const matchRoute = async (ctx, next) => {

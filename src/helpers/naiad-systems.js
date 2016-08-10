@@ -1,7 +1,7 @@
 import {
   get as $get,
   post as $post
-} from '../../shared/helpers/icf-fetch'
+} from './icf-fetch'
 
 export const get = url => async ctx => {
   // this response is already cashed if `true` is returned,

@@ -1,5 +1,3 @@
-import * as constants from '../constants'
-
 const initialState = {
   preloaded: false,
   pending: false,

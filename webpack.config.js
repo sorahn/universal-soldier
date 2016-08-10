@@ -4,7 +4,7 @@ import CompressionPlugin from 'compression-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 export default {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   entry: [ './src/client/app.js' ],
   output: {
     filename: 'bundle.js',

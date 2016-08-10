@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute, Redirect } from 'react-router'
+import { Router, Route, IndexRoute, Redirect } from 'react-router'
 
 /* container components */
 import { App, Search } from './containers'
@@ -18,3 +18,4 @@ const routes = (
 )
 
 export default routes
+
