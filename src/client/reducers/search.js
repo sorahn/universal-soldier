@@ -4,7 +4,7 @@ const initialState = {
   results: [],
 }
 
-export default function reducer(state = initialState, action) {
+export default function search(state = initialState, action) {
   switch (action.type) {
     case 'SEARCH_PENDING':
       return {
