@@ -8,43 +8,20 @@ import convert from 'koa-convert'
 import userAgent from 'koa-useragent'
 import kcors from 'kcors'
 import path from 'path'
-import lruCache from 'lru-cache'
-import cash from 'koa-cash'
-import hash from 'object-hash'
 
+import cache from './cache'
 import router from './router'
 
-import * as api from './api'
-import responseTime from './middleware/response-time'
-import {
-  loadComponentData,
-  matchReactRoute,
-  renderApplication
-} from './middleware'
+import { responseTime } from './middleware'
 
 // Set up Koa
 const app = new Koa()
-const cache = lruCache({
-  maxAge: 60 * 1000 // 1 minute cache
-})
 
 app.use(responseTime)
 app.use(convert(userAgent()))
 app.use(kcors())
 
-app.use(convert(cash({
-  hash: (ctx) => {
-    const {
-      headers: { 'user-agent': userAgent },
-      url,
-    } = ctx.request
-
-    // Hash the storage key by the url, and the userAgent
-    return hash({ url, userAgent })
-  },
-  get: (key, maxAge) =>  cache.get(key, maxAge),
-  set: (key, value) => cache.set(key, value),
-})))
+app.use(cache)
 
 // This serves all the files in 'public' as static assets.
 const assets = serve(path.resolve(__dirname + '/../../public'))
