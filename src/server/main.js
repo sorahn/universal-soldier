@@ -20,7 +20,6 @@ const app = new Koa()
 app.use(responseTime)
 app.use(convert(userAgent()))
 app.use(kcors())
-
 app.use(cache)
 
 // This serves all the files in 'public' as static assets.
