@@ -2,7 +2,6 @@ global.__CLIENT__ = false
 global.__SERVER__ = true
 
 import Koa from 'koa'
-import Router from 'koa-router'
 import serve from 'koa-static'
 import mount from 'koa-mount'
 import convert from 'koa-convert'
@@ -13,9 +12,15 @@ import lruCache from 'lru-cache'
 import cash from 'koa-cash'
 import hash from 'object-hash'
 
+import router from './router'
+
 import * as api from './api'
-import all from './routes/all'
 import responseTime from './middleware/response-time'
+import {
+  loadComponentData,
+  matchReactRoute,
+  renderApplication
+} from './middleware'
 
 // Set up Koa
 const app = new Koa()
@@ -41,26 +46,10 @@ app.use(convert(cash({
   set: (key, value) => cache.set(key, value),
 })))
 
+// This serves all the files in 'public' as static assets.
 const assets = serve(path.resolve(__dirname + '/../../public'))
 app.use(mount('/public', assets))
 
-
-// Build the router
-const router = new Router()
-
-// Assign a route from our exported route objects.
-const assign = ({ verb, route, actions }) => {
-  console.log('register route -', verb, route)
-  router[verb](route, ...actions)
-}
-
-// Iterate over all the routes, and assign them.
-Object.keys(api).map(i => assign(api[i]))
-
-// Load the main route for everything else.
-router.get('*', ...all.actions)
-
-// Tell koa to use the routes.
 app.use(router.routes())
 
 app.listen(3000, 'localhost', function (err) {
