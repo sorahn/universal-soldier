@@ -1,20 +1,22 @@
 {
-  "name": "react-router-redux-example",
+  "name": "universal-soldier",
   "description": "react-router-redux example with universal rendering",
   "version": "1.0.1",
   "license": "MIT",
-  "author": "Steven Iseki <stevenisekimartin@gmail.com>",
+  "author": "Daryl Roberts <daryl.roberts@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StevenIseki/react-router-redux-example.git"
+    "url": "https://github.com/sorahn/universal-soldier.git"
   },
   "scripts": {
     "build": "babel-node ./node_modules/.bin/webpack",
-    "prestart": "rimraf public",
+    "kill-abandoned": "kill $(ps aux | grep $(basename $(echo $PWD)) | grep node | awk '{ print $2; }') 2> /dev/null",
+    "prebuild": "rimraf public",
+    "prestart": "npm run kill-abandoned --silent || true",
     "server": "babel-node --inspect ./src/server/main.js",
     "start": "concurrently 'npm run watch' 'npm run watch:server'",
     "watch": "npm run build -- --watch",
-    "watch:server": "nodemon -x npm run server -w server.js -w src"
+    "watch:server": "nodemon -x npm run server -w src"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
