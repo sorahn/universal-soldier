@@ -1,3 +1,2 @@
-export { default as icfFetch } from './icfFetch'
-export { default as naiadSystems } from './naiadSystems'
+export { default as fetchWrapper } from './fetchWrapper'
 

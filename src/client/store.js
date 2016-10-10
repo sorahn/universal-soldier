@@ -2,16 +2,16 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
-import fetchMiddleware from 'redux-fetch-middleware'
+import promiseMiddleware from 'redux-promise-middleware'
 
 import * as reducers from './reducers'
 
 export function configureStore(history, initialState) {
   const reducer = combineReducers({ ...reducers })
   const router = routerMiddleware(history)
-  const fetch = fetchMiddleware()
+  const promise = promiseMiddleware()
 
-  const middleware = [ fetch, router, thunk ]
+  const middleware = [ promise, router, thunk ]
 
   if (process.env.NODE_ENV !== 'production') {
     const logger = createLogger({ collapsed: true })

@@ -1,3 +1,5 @@
+import { fetchWrapper } from '../../helpers'
+
 // take an object, and reduce it to a query string for sending GET params.
 export const objectToQueryString = (object = {}) => {
   return Object.keys(object).reduce((previous, key) => {
@@ -17,8 +19,6 @@ export const fetchSearch = (params, options) => dispatch => {
 
   return dispatch({
     type: 'SEARCH',
-    $payload: {
-      url: `http://localhost:8181/api/search/v1/list?${query}`,
-    }
+    payload: fetchWrapper(`http://localhost:8181/api/search/v1/list?${query}`)
   })
 }
