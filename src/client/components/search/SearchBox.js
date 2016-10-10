@@ -4,14 +4,6 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Field, reduxForm } from 'redux-form'
 import { TextField } from 'redux-form-material-ui'
-import pick from 'lodash/pick'
-
-const styles = {
-  input: {
-    fontSize: '1.5em',
-    width: '100%',
-  }
-}
 
 function SearchBox (props) {
   return (
@@ -28,9 +20,13 @@ const form = {
 
 const state = (state, props) => ({
   initialValues: {
-    keyword: props.params.keyword || ''
+    keyword: props.keyword
   },
 })
+
+SearchBox.defaultProps = {
+  keyword: '',
+}
 
 export default compose(
   connect(state),

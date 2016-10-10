@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, IndexLink } from 'react-router'
-import { Flex, Box } from 'reflexbox'
-import path from 'path'
 import { Card, CardTitle, CardActions } from 'material-ui/Card'
-import { SearchGrid, SearchBox } from './'
+import { SearchGrid, SearchBox, Pager } from './'
 import { fetchSearch, clearPreloadedFlag } from '../../actions/search'
 
 class Search extends Component {
@@ -48,44 +45,17 @@ class Search extends Component {
     const {
       location: { pathname },
       page_number,
-      params,
       results,
       userAgent,
     } = this.props
 
-    const center = { textAlign: 'center' }
-    const basePath = pathname.replace(/\/page\/.$/, '')
-
-    const prevTo = page_number === 2
-      ? basePath
-      : path.normalize(`${basePath}/page/${page_number - 1}`)
-
-    const previous = page_number > 1
-      ? <Link to={prevTo}>Previous</Link>
-      : null
-
-    const nextTo = path.normalize(`${basePath}/page/${page_number + 1}`)
-
-    // const keyword = params.keyword ? `- "${params.keyword}" ` : null
-
     return (
       <Card>
         <CardTitle title='Search Results'/>
+        <SearchBox />
         <SearchGrid results={results} userAgent={userAgent} />
         <CardActions>
-          <Flex>
-            <Box col={4} style={center}>
-              {previous}
-            </Box>
-
-            <Box col={4} style={center}>
-              <IndexLink to='/'>Home</IndexLink>
-            </Box>
-
-            <Box col={4} style={center}>
-              <Link to={nextTo}>Next</Link>
-            </Box>
-          </Flex>
+          <Pager pathname={pathname} page_number={page_number} />
         </CardActions>
       </Card>
     )
