@@ -1,2 +1,3 @@
-export icfFetch from './icf-fetch'
-export naiadSystems from './naiad-systems'
+export { default as icf-fetch } from './icf-fetch'
+export { default as naiad-systems } from './naiad-systems'
+

@@ -1,22 +1,12 @@
 {
-  "name": "universal-soldier",
-  "description": "react-router-redux example with universal rendering",
+  "name": "react-universal-soldier",
+  "description": "A React/Redux Universal SSR Example",
   "version": "1.0.1",
   "license": "MIT",
   "author": "Daryl Roberts <daryl.roberts@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/sorahn/universal-soldier.git"
-  },
-  "scripts": {
-    "build": "babel-node ./node_modules/.bin/webpack",
-    "kill-abandoned": "kill $(ps aux | grep $(basename $(echo $PWD)) | grep node | awk '{ print $2; }') 2> /dev/null",
-    "prebuild": "rimraf public",
-    "prestart": "npm run kill-abandoned --silent || true",
-    "server": "babel-node --inspect ./src/server/main.js",
-    "start": "concurrently 'npm run watch' 'npm run watch:server'",
-    "watch": "npm run build -- --watch",
-    "watch:server": "nodemon -x npm run server -w src"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
@@ -29,35 +19,31 @@
     "koa-send": "^3.2.0",
     "koa-static": "^3.0.0",
     "koa-useragent": "^0.1.4",
-    "lodash": "^4.14.2",
+    "lodash": "^4.16.4",
     "normalize-css": "^2.3.1",
     "object-hash": "^1.1.4",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
-    "react-router": "^2.6.1",
-    "react-router-redux": "^4.0.5",
-    "redux": "^3.5.2",
-    "redux-form": "^5.3.2",
-    "redux-logger": "^2.6.1",
+    "react-router": "^2.8.1",
+    "react-router-redux": "^4.0.6",
+    "redux": "^3.6.0",
+    "redux-form": "^6.1.0",
+    "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
-    "reflexbox": "^2.1.0",
+    "reflexbox": "^2.2.2",
     "serialize-javascript": "^1.3.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-preset-stage-1": "^6.13.0",
-    "babel-register": "^6.11.6",
-    "compression-webpack-plugin": "^0.3.1",
-    "concurrently": "^2.2.0",
-    "copy-webpack-plugin": "^3.0.1",
-    "nodemon": "^1.10.0",
-    "rimraf": "^2.5.4",
-    "webpack": "^1.13.1"
+    "concurrently": "^3.1.0",
+    "react-scripts": "^0.6.1"
+  },
+  "scripts": {
+    "all": "concurrently 'npm run server' 'npm run start'",
+    "build": "react-scripts build",
+    "server": "babel-node --inspect ./src/server/main.js",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "webpack-dev-server": "react-scripts start --color"
   }
 }

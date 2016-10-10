@@ -18,4 +18,4 @@ const App = () => (
   </Provider>
 )
 
-render(<App />, document.getElementById('mount'))
+render(<App />, document.getElementById('root'))

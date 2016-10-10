@@ -1,2 +1,3 @@
-export App from './App'
-export Search from './Search'
+export { default as App } from './App'
+export { default as Search } from './Search'
+

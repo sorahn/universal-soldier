@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import * as constants from '../constants'
 
 // take an object, and reduce it to a query string for sending GET params.
 export const objectToQueryString = (object = {}) => {

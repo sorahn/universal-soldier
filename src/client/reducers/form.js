@@ -1,2 +1,1 @@
-import { reducer as form } from 'redux-form'
-export default form
+export { reducer as default } from 'redux-form'
