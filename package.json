@@ -44,7 +44,7 @@
     "react-scripts": "^0.6.1"
   },
   "scripts": {
-    "all": "concurrently 'npm run server' 'npm run start'",
+    "all": "concurrently  --prefix '[{name}]' --names 'scripts,server' 'npm run start -- --color' 'npm run server'",
     "build": "react-scripts build",
     "server": "babel-node --inspect ./src/server/main.js",
     "start": "react-scripts start",

@@ -28,10 +28,10 @@ app.use(mount('/public', assets))
 
 app.use(router.routes())
 
-app.listen(3000, 'localhost', function (err) {
+app.listen(8181, 'localhost', function (err) {
   if (err) {
     console.log(err);
     return;
   }
-  console.log('listening on http://127.0.0.1:3000')
+  console.log('listening on http://127.0.0.1:8181')
 })
