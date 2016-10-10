@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch'
-
 // take an object, and reduce it to a query string for sending GET params.
 export const objectToQueryString = (object = {}) => {
   return Object.keys(object).reduce((previous, key) => {
@@ -7,32 +5,20 @@ export const objectToQueryString = (object = {}) => {
   }, []).join('&')
 }
 
-export const clearPreloadedFlag = () => ({
-  type: 'CLEAR_SEARCH_PRELOADED_FLAG'
-})
-
-export const searchPending = () => ({
-  type: 'SEARCH_PENDING'
-})
-
-export const searchSuccess = (results, preloaded) => ({
-  type: 'SEARCH_SUCCESS',
-  results,
-  preloaded,
-})
-
-export const fetchSearch = ({ preloaded = false, params }, options) => dispatch => {
-  const defaultSearchParams = {
-    page_number: 1,
-    results_per_page: 24,
-  }
+export const fetchSearch = (params, options) => dispatch => {
+  const {
+    page_number = 1,
+    results_per_page = 24,
+    ...rest
+  } = params
 
   // Spread out the defaults, then spread out the rest of the params.
-  const query = objectToQueryString({ ...defaultSearchParams, ...params, })
+  const query = objectToQueryString({ page_number, results_per_page, ...rest })
 
-  // @TODO add redux-promise-middleware
-  dispatch(searchPending())
-  return fetch(`http://localhost:8181/api/search/v1/list?${query}`, options)
-    .then(req => req.json())
-    .then(({ Results }) => dispatch(searchSuccess(Results, preloaded)))
+  return dispatch({
+    type: 'SEARCH',
+    $payload: {
+      url: `http://localhost:8181/api/search/v1/list?${query}`,
+    }
+  })
 }

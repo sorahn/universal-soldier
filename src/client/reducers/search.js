@@ -1,12 +1,11 @@
 const initialState = {
-  preloaded: false,
   pending: false,
   results: [],
 }
 
 export default function search(state = initialState, action) {
   switch (action.type) {
-    case 'SEARCH_PENDING':
+    case 'SEARCH_REQUEST':
       return {
         ...state,
         pending: true,
@@ -16,14 +15,7 @@ export default function search(state = initialState, action) {
       return {
         ...state,
         pending: false,
-        preloaded: action.preloaded,
-        results: action.results,
-      }
-
-    case 'CLEAR_SEARCH_PRELOADED_FLAG':
-      return {
-        ...state,
-        preloaded: false
+        results: action.data.Results,
       }
 
     default: return state
