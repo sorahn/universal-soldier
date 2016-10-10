@@ -2,7 +2,8 @@ import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
 /* container components */
-import { App, Search } from './containers'
+import { App } from './components'
+import { Search } from './components/search'
 
 const routes = (
   <Route path='/' component={App}>

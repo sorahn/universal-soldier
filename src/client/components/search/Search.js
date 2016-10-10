@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
 import { Flex, Box } from 'reflexbox'
-import { SearchGrid, SearchBox } from '../components/search'
-import { fetchSearch, clearPreloadedFlag } from '../actions/search'
+import { SearchGrid, SearchBox } from './'
+import { fetchSearch, clearPreloadedFlag } from '../../actions/search'
 import path from 'path'
 
 class Search extends Component {
