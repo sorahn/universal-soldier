@@ -1,4 +1,4 @@
-import { get } from '../../helpers/naiad-systems'
+import { get } from '../../helpers/naiadSystems'
 
 export default {
   verb: 'get',

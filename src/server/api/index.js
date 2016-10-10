@@ -1,1 +1,2 @@
-export searchV1List from './search-v1-list'
+export { default as searchV1List } from './searchV1List'
+

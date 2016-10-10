@@ -1,1 +1,2 @@
-export HTML from './HTML'
+export { default as HTML } from './HTML'
+

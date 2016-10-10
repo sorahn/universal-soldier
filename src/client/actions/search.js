@@ -32,7 +32,7 @@ export const fetchSearch = ({ preloaded = false, params }, options) => dispatch 
 
   // @TODO add redux-promise-middleware
   dispatch(searchPending())
-  return fetch(`http://localhost:3000/api/search/v1/list?${query}`, options)
+  return fetch(`http://localhost:8181/api/search/v1/list?${query}`, options)
     .then(req => req.json())
     .then(({ Results }) => dispatch(searchSuccess(Results, preloaded)))
 }
