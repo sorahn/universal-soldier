@@ -6,19 +6,7 @@ import { fetchSearch, clearPreloadedFlag } from '../../actions/search'
 
 class Search extends Component {
   static fetchData ({ store, searchParams, fetchOptions }) {
-    return store.dispatch(fetchSearch(searchParams, fetchOptions))
-  }
-
-  // If there is no preloaded flag, and no results, then fetch them.  Otherwise
-  // just clear the flag
-  componentWillMount () {
-    console.log('Search - componentWillMount')
-
-    if (!this.props.preloaded && !this.props.results.length) {
-      this.props.fetchSearch({ ...this.props.params })
-    } else {
-      this.props.clearPreloadedFlag()
-    }
+    return Promise.resolve(store.dispatch(fetchSearch(searchParams, fetchOptions)))
   }
 
   componentWillReceiveProps ({ params }) {
@@ -30,13 +18,9 @@ class Search extends Component {
     }
   }
 
-  componentWillUpdate () {
-    console.log('Search - componentWillUpdate')
-
-  }
-
   componentDidMount () {
     console.log('Search - componentDidMount')
+    this.props.fetchSearch(this.props.params)
   }
 
   render () {
@@ -53,7 +37,7 @@ class Search extends Component {
       <Card>
         <CardTitle title='Search Results'/>
         <SearchBox />
-        <SearchGrid results={results} userAgent={userAgent} />
+        <SearchGrid results={results} />
         <CardActions>
           <Pager pathname={pathname} page_number={page_number} />
         </CardActions>
