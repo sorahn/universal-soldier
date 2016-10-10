@@ -2,10 +2,9 @@ import React from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
+import { TextField } from 'redux-form-material-ui'
 import pick from 'lodash/pick'
-
-import { INPUT_PROPS } from '../../constants/inputs'
 
 const styles = {
   input: {
@@ -16,32 +15,24 @@ const styles = {
 
 function SearchBox (props) {
   return (
-    <form onSubmit={props.handleSubmit(props.submitCallback)}>
-      <input
-        style={styles.input}
-        type='text'
-        {...pick(props.fields.keyword, INPUT_PROPS) }
-      />
+    <form onSubmit={props.handleSubmit}>
+      <Field name='keyword' component={TextField} floatingLabelText='Keyword' fullWidth />
     </form>
   )
 }
 
-const mapDispatchToProps = dispatch => ({
-  submitCallback: ({keyword}) => dispatch(push(`/search/${keyword}`))
-})
-
-const formConfig = {
+const form = {
   form: 'search',
-  fields: [ 'keyword' ]
+  handleSubmit: (values, dispatch) => dispatch(push(`/search/${values.keyword}`)),
 }
 
-const mapStateToForm = (state, props) => ({
+const state = (state, props) => ({
   initialValues: {
     keyword: props.params.keyword || ''
-  }
+  },
 })
 
 export default compose(
-  connect(null, mapDispatchToProps),
-  reduxForm(formConfig, mapStateToForm)
+  connect(state),
+  reduxForm(form)
 )(SearchBox)

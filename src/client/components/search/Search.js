@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, IndexLink } from 'react-router'
 import { Flex, Box } from 'reflexbox'
+import path from 'path'
+import { Card, CardTitle, CardActions } from 'material-ui/Card'
 import { SearchGrid, SearchBox } from './'
 import { fetchSearch, clearPreloadedFlag } from '../../actions/search'
-import path from 'path'
 
 class Search extends Component {
   static fetchData ({ store, searchParams, fetchOptions }) {
@@ -65,37 +66,28 @@ class Search extends Component {
 
     const nextTo = path.normalize(`${basePath}/page/${page_number + 1}`)
 
-    const keyword = params.keyword ? `- "${params.keyword}" ` : null
+    // const keyword = params.keyword ? `- "${params.keyword}" ` : null
 
     return (
-      <div>
-        <Flex align='center'>
-          <Box col={6}>
-            <h2>Search {keyword} - Page {page_number}</h2>
-          </Box>
-          <Box col={6}>
-            <SearchBox params={params} />
-          </Box>
-        </Flex>
-        <hr />
-
-        <Flex>
-          <Box col={4} style={center}>
-            {previous}
-          </Box>
-
-          <Box col={4} style={center}>
-            <IndexLink to='/'>Home</IndexLink>
-          </Box>
-
-          <Box col={4} style={center}>
-            <Link to={nextTo}>Next</Link>
-          </Box>
-        </Flex>
-        <hr />
-
+      <Card>
+        <CardTitle title='Search Results'/>
         <SearchGrid results={results} userAgent={userAgent} />
-      </div>
+        <CardActions>
+          <Flex>
+            <Box col={4} style={center}>
+              {previous}
+            </Box>
+
+            <Box col={4} style={center}>
+              <IndexLink to='/'>Home</IndexLink>
+            </Box>
+
+            <Box col={4} style={center}>
+              <Link to={nextTo}>Next</Link>
+            </Box>
+          </Flex>
+        </CardActions>
+      </Card>
     )
   }
 }
