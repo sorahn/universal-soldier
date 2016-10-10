@@ -14,7 +14,7 @@ class Search extends Component {
 
     if (this.props.params !== params) {
       console.info('Search - params are different')
-      this.props.fetchSearch({ ...params })
+      this.props.fetchSearch(params)
     }
   }
 
@@ -30,7 +30,6 @@ class Search extends Component {
       location: { pathname },
       page_number,
       results,
-      userAgent,
     } = this.props
 
     return (

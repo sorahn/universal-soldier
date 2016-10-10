@@ -72,14 +72,14 @@ function SearchGrid (props, context) {
           borderBottomColor: statusColors[result.StatusKey]
         }
 
-        // const src = `//m1.nsimg.net/biopic/320x240/${result.PerformerId}`
+        const src = `//m1.nsimg.net/biopic/320x240/${result.PerformerId}`
 
         return (
           <Box auto key={result.PerformerId} col={6} sm={6} md={4} lg={3} p={1}>
             <Link to={`/cam/${result.Nickname}`}>
               <div style={containerStyle}>
                 <div style={styles.fill}>
-                  <img src={''} style={styles.img} alt={result.Nickname} width={320} height={240} />
+                  <img src={src} style={styles.img} alt={result.Nickname} width={320} height={240} />
                 </div>
                 <Flex style={styles.nameBar} justify='space-between'>
                   <div>{result.Nickname}</div>

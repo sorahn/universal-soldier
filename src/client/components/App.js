@@ -8,7 +8,7 @@ injectTapEventPlugin()
 function App({ children }) {
   return (
     <Paper>
-      <AppBar title='Universal Soldier'/>
+      <AppBar title='Universal React Test'/>
       {children}
     </Paper>
 
