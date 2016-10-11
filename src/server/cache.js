@@ -4,7 +4,7 @@ import lruCache from 'lru-cache'
 import objectHash from 'object-hash'
 
 const cache = lruCache({
-  maxAge: 60 * 5000 // 1 minute cache
+  maxAge: 60 * 1000 // 1 minute cache
 })
 
 const hash = ctx => {

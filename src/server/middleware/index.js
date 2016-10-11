@@ -1,3 +1,4 @@
+export { default as getMiddleware } from './getMiddleware'
 export { default as fetchMiddleware } from './fetchMiddleware'
 export { default as loadComponentData } from './loadComponentData'
 export { default as matchReactRoute } from './matchReactRoute'
