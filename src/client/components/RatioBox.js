@@ -1,5 +1,21 @@
 import React, { PropTypes } from 'react'
 
+const getStyles = styles => ({
+  inner: {
+    height: '100%',
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+  },
+  root: {
+    overflow: styles.overflow,
+    paddingTop: `${styles.ratio}%`,
+    position: 'relative',
+    width: '100%',
+  },
+})
+
 export default function RatioBox (props) {
   const {
     children,
@@ -9,22 +25,7 @@ export default function RatioBox (props) {
   } = props
 
   const ratio = height / width * 100
-
-  const styles = {
-    root: {
-      overflow,
-      paddingTop: `${ratio}%`,
-      position: 'relative',
-      width: '100%',
-    },
-    inner: {
-      height: '100%',
-      left: 0,
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-    }
-  }
+  const styles = getStyles({ overflow, ratio })
 
   return (
     <div className='RatioBox' style={styles.root}>

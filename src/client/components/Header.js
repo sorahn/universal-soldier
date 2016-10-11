@@ -6,20 +6,20 @@ import { connect } from 'react-redux'
 import { toggleSearchBox } from '../actions/application'
 import { black } from 'material-ui/styles/colors'
 
-const styles = {
+const getStyles = styles => ({
   appbar: {
-    position: 'fixed',
+    backgroundColor: styles.backgroundColor,
     left: 0,
+    position: 'fixed',
     top: 0,
-    backgroundColor: black,
   },
   img: {
-    maxHeight: 48,
     lineHeight: 64,
     marginTop: 8,
+    maxHeight: 48,
     verticalAlign: 'top',
-  }
-}
+  },
+})
 
 function Header (props) {
   const searchIcon = (
@@ -27,6 +27,10 @@ function Header (props) {
       <Search />
     </IconButton>
   )
+
+  const styles = getStyles({
+    backgroundColor: black
+  })
 
   return (
     <AppBar
