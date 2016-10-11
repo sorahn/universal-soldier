@@ -15,7 +15,7 @@ function SearchBox (props) {
 
 const form = {
   form: 'search',
-  handleSubmit: (values, dispatch) => dispatch(push(`/search/${values.keyword}`)),
+  onSubmit: (values, dispatch) => dispatch(push(`/search/${values.keyword}`)),
 }
 
 const state = (state, props) => ({

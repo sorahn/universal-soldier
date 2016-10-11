@@ -29,13 +29,14 @@ class Search extends Component {
     const {
       location: { pathname },
       page_number,
+      params,
       results,
     } = this.props
 
     return (
       <Card>
         <CardTitle title='Search Results'/>
-        <SearchBox />
+        <SearchBox keyword={params.keyword} />
         <SearchGrid results={results} />
         <CardActions>
           <Pager pathname={pathname} page_number={page_number} />
