@@ -15,6 +15,7 @@ class Search extends Component {
     if (this.props.params !== params) {
       console.info('Search - params are different')
       this.props.fetchSearch(params)
+      window.scrollTo(0, 0)
     }
   }
 
