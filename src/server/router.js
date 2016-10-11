@@ -19,6 +19,10 @@ const assign = ({ verb, route, actions }) => {
 // Iterate over all the routes, and assign them.
 Object.keys(api).map(i => assign(api[i]))
 
+// router.get('/proxy/get', (ctx, next) => {
+//   console.log(ctx.request)
+// })
+
 // Load the main route for everything else.
 router.get('*', matchReactRoute, loadComponentData, renderApplication)
 

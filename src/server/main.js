@@ -25,7 +25,6 @@ app.use(cache)
 // This serves all the files in 'public' as static assets.
 const assets = serve(path.resolve(__dirname + '/../../public'))
 app.use(mount('/public', assets))
-
 app.use(router.routes())
 
 app.listen(8181, 'localhost', function (err) {
