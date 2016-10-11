@@ -19,7 +19,7 @@ function MainContainer (props) {
 
   return (
     <Card>
-      <Flex column justify='space-between' style={styles}>
+      <Flex column justify='space-between' style={styles.flex}>
         {props.children}
       </Flex>
     </Card>
