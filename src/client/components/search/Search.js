@@ -3,15 +3,16 @@ import { connect } from 'react-redux'
 import { CardTitle, CardActions, CardText } from 'material-ui/Card'
 import { SearchGrid, SearchBox, Pager } from './'
 import { fetchSearch } from '../../actions/search'
+import _ from 'lodash'
 
 class Search extends Component {
   static fetchData ({ store, searchParams, fetchOptions }) {
     return Promise.resolve(store.dispatch(fetchSearch(searchParams, fetchOptions)))
   }
 
-  componentWillReceiveProps ({ params }) {
-    if (this.props.params !== params) {
-      this.props.fetchSearch(params)
+  componentWillReceiveProps (nextProps) {
+    if(!_.isEqual(this.props.params, nextProps.params)) {
+      this.props.fetchSearch(nextProps.params)
       window.scrollTo(0, 0)
     }
   }

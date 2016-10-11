@@ -5,6 +5,7 @@ import Search from 'material-ui/svg-icons/action/search'
 import { connect } from 'react-redux'
 import { toggleSearchBox } from '../actions/application'
 import { black } from 'material-ui/styles/colors'
+import { IndexLink } from 'react-router'
 
 const getStyles = styles => ({
   appbar: {
@@ -34,7 +35,7 @@ function Header (props) {
 
   return (
     <AppBar
-      title={<img src='http://i.imgur.com/txdutzQ.png' alt='Universal Soldier' style={styles.img} />}
+      title={<IndexLink to='/'><img src='http://i.imgur.com/txdutzQ.png' alt='Universal Soldier' style={styles.img} /></IndexLink>}
       iconElementRight={searchIcon}
       style={styles.appbar}
 
