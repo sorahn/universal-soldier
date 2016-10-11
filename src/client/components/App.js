@@ -1,31 +1,28 @@
 import React, { PropTypes } from 'react'
-import Card from 'material-ui/Card'
-import AppBar from 'material-ui/AppBar'
-import IconButton from 'material-ui/IconButton'
-import Search from 'material-ui/svg-icons/action/search'
-
+import { CardText } from 'material-ui/Card'
+import { Box } from 'reflexbox'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+
+import { Header, MainContainer } from './'
+
 injectTapEventPlugin()
 
 function App (props) {
-  const searchIcon = (
-    <IconButton onTouchTap={e => console.log(e)}>
-      <Search />
-    </IconButton>
-  )
-
   return (
-    <Card>
-      <AppBar
-        title={<img src='http://i.imgur.com/YYpfYrX.png' alt='Universal Soldier' style={{maxHeight: '80%', verticalAlign: 'middle'}} />}
-        iconElementRight={searchIcon}
-      />
+    <MainContainer>
+      <Header />
 
       {props.children}
 
-      <br /><br />
-
-    </Card>
+      <Box style={{marginTop: 'auto'}}>
+        <CardText>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat.
+        </CardText>
+      </Box>
+    </MainContainer>
   )
 }
 

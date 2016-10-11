@@ -35,11 +35,12 @@ class Search extends Component {
 
     return (
       <div>
-        <CardTitle title='Search Results'/>
-        <CardText style={{paddingTop: 0}}>
+        <CardText style={{paddingTop: 0, paddingBottom: 0, marginTop: -8}}>
           <SearchBox keyword={params.keyword} />
         </CardText>
+        <CardTitle title='Search Results'/>
         <SearchGrid results={results} />
+
         <CardActions>
           <Pager pathname={pathname} page_number={page_number} />
         </CardActions>

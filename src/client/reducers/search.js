@@ -1,7 +1,7 @@
 const initialState = {
+  error: false,
   pending: false,
   results: [],
-  error: false,
 }
 
 export default function search(state = initialState, action) {
