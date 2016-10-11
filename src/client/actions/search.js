@@ -14,11 +14,11 @@ export const fetchSearch = (params, options) => dispatch => {
     ...rest
   } = params
 
-  // Spread out the defaults, then spread out the rest of the params.
+  // defaults, then spread out the rest of the params.
   const query = objectToQueryString({ page_number, results_per_page, ...rest })
 
   return dispatch({
     type: 'SEARCH',
-    payload: fetchWrapper(`http://localhost:8181/proxy/get/search/v2/search/list?${query}`)
+    payload: fetchWrapper(`http://localhost:8181/proxy/get/serch/v2/search/list?${query}`)
   }).catch(e => console.error(e))
 }
