@@ -8,8 +8,17 @@ import { Search } from './components/search'
 const routes = (
   <Route path='/' component={App}>
     <IndexRoute component={Search} />
-    <Route path='/page/:page_number' component={Search} />
-    <Route path='/search/:keyword(/page/:page_number)' component={Search} />
+    <Route
+      basePath='/'
+      component={Search}
+      path='/page/:page_number'
+    />
+    <Route
+      basePath='/search'
+      baseParams={[ 'keyword' ]}
+      component={Search}
+      path='/search/:keyword(/page/:page_number)'
+    />
     <Route path='/cam/:nickname' component={props => {
       return <div>Hello {props.params.nickname}</div>
     }} />

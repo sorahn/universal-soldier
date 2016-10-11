@@ -31,6 +31,7 @@ class Search extends Component {
       page_number,
       params,
       results,
+      route,
     } = this.props
 
     return (
@@ -42,7 +43,12 @@ class Search extends Component {
         <SearchGrid results={results} />
 
         <CardActions>
-          <Pager pathname={pathname} page_number={page_number} />
+          <Pager
+            params={params}
+            route={route}
+            page_number={page_number}
+            pathname={pathname}
+          />
         </CardActions>
       </div>
     )

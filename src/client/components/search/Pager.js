@@ -1,19 +1,28 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Flex, Box } from 'reflexbox'
 import { Link } from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
 import path from 'path'
 
 export default function Pager (props) {
-  const { pathname, page_number } = props
+  const {
+    page_number,
+    params,
+    route
+  } = props
 
-  const basePath = pathname.replace(/\/page\/.$/, '/')
+  const {
+    baseParams = [],
+    basePath = '/',
+  } = route
+
+  const pathParams = baseParams.map(param => String(params[param]))
 
   const prevLink = page_number < 3
-    ? basePath
-    : path.join(basePath, 'page', String(page_number - 1))
+    ? path.join(basePath, ...pathParams)
+    : path.join(basePath, ...pathParams, 'page', String(page_number - 1))
 
-  const nextLink = path.join(basePath, 'page', String(page_number + 1))
+  const nextLink = path.join(basePath, ...pathParams, 'page', String(page_number + 1))
 
   return (
     <Flex justify='space-between'>
@@ -23,15 +32,14 @@ export default function Pager (props) {
           containerElement={<Link to={prevLink} />}
           disabled={page_number === 1}
           label='previous'
-          onTouchTap={e => e.target.blur()}
         />
       </Box>
       <Box>
         <RaisedButton
           primary
-          containerElement={<Link to={nextLink} />}
+          containerElement={<Link to={nextLink} onTouchTap={e => e.target.blur()} />}
           label='next'
-          onTouchTap={e => e.target.blur()}
+          onTouchTap={e => { e.persist(); setImmediate(() => e.target.blur()) }}
         />
       </Box>
     </Flex>
@@ -40,4 +48,9 @@ export default function Pager (props) {
 
 Pager.defaultProps = {
   page_number: 1,
+}
+
+Pager.propTypes = {
+  page_number: PropTypes.number,
+  param: PropTypes.object,
 }
