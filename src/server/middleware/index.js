@@ -1,7 +1,6 @@
 export { default as getMiddleware } from './getMiddleware'
-export { default as fetchMiddleware } from './fetchMiddleware'
 export { default as loadComponentData } from './loadComponentData'
 export { default as matchReactRoute } from './matchReactRoute'
 export { default as renderApplication } from './renderApplication'
 export { default as responseTime } from './responseTime'
-
+export { default as postMiddleware } from './postMiddleware'

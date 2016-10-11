@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, CardActions } from 'material-ui/Card'
+import { CardTitle, CardActions, CardText } from 'material-ui/Card'
 import { SearchGrid, SearchBox, Pager } from './'
 import { fetchSearch } from '../../actions/search'
 
@@ -34,14 +34,16 @@ class Search extends Component {
     } = this.props
 
     return (
-      <Card>
+      <div>
         <CardTitle title='Search Results'/>
-        <SearchBox keyword={params.keyword} />
+        <CardText style={{paddingTop: 0}}>
+          <SearchBox keyword={params.keyword} />
+        </CardText>
         <SearchGrid results={results} />
         <CardActions>
           <Pager pathname={pathname} page_number={page_number} />
         </CardActions>
-      </Card>
+      </div>
     )
   }
 }

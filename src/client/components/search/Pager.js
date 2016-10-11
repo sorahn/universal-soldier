@@ -1,37 +1,43 @@
 import React from 'react'
 import { Flex, Box } from 'reflexbox'
-import { IndexLink, Link } from 'react-router'
+import { Link } from 'react-router'
+import RaisedButton from 'material-ui/RaisedButton'
 import path from 'path'
 
 export default function Pager (props) {
   const { pathname, page_number } = props
 
-  const center = { textAlign: 'center' }
-  const basePath = pathname.replace(/\/page\/.$/, '')
+  const basePath = pathname.replace(/\/page\/.$/, '/')
 
-  const prevTo = page_number === 2
+  const prevLink = page_number < 3
     ? basePath
-    : path.normalize(`${basePath}/page/${page_number - 1}`)
+    : path.join(basePath, 'page', String(page_number - 1))
 
-  const previous = page_number > 1
-    ? <Link to={prevTo}>Previous</Link>
-    : null
-
-  const nextTo = path.normalize(`${basePath}/page/${page_number + 1}`)
+  const nextLink = path.join(basePath, 'page', String(page_number + 1))
 
   return (
-    <Flex>
-      <Box col={4} style={center}>
-        {previous}
+    <Flex justify='space-between'>
+      <Box>
+        <RaisedButton
+          primary
+          containerElement={<Link to={prevLink} />}
+          disabled={page_number === 1}
+          label='previous'
+          onTouchTap={e => e.target.blur()}
+        />
       </Box>
-
-      <Box col={4} style={center}>
-        <IndexLink to='/'>Home</IndexLink>
-      </Box>
-
-      <Box col={4} style={center}>
-        <Link to={nextTo}>Next</Link>
+      <Box>
+        <RaisedButton
+          primary
+          containerElement={<Link to={nextLink} />}
+          label='next'
+          onTouchTap={e => e.target.blur()}
+        />
       </Box>
     </Flex>
   )
+}
+
+Pager.defaultProps = {
+  page_number: 1,
 }

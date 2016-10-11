@@ -19,6 +19,6 @@ export const fetchSearch = (params, options) => dispatch => {
 
   return dispatch({
     type: 'SEARCH',
-    payload: fetchWrapper(`http://localhost:8181/proxy/get/serch/v2/search/list?${query}`)
+    payload: fetchWrapper(`http://localhost:8181/proxy/get/search/v2/search/list?${query}`)
   }).catch(e => console.error(e))
 }
