@@ -1,8 +1,14 @@
 import React, { PropTypes } from 'react'
 import { Flex, Box } from 'reflexbox'
 import { Link } from 'react-router'
-import RaisedButton from 'material-ui/RaisedButton'
+import { RaisedButton } from '../'
 import path from 'path'
+
+const onTouchTap = e => {
+  e.persist()
+  event = document.createEvent('mouseleave')
+  setTimeout(() => e.target.dispatchEvent(event), 500)
+}
 
 export default function Pager (props) {
   const {
@@ -42,7 +48,7 @@ export default function Pager (props) {
       <Box>
         <RaisedButton
           primary
-          containerElement={<Link to={nextLinkPath} />}
+          containerElement={<Link to={nextLinkPath} onTouchTap={onTouchTap} />}
           label='next'
         />
       </Box>

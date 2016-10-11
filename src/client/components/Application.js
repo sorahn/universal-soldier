@@ -7,7 +7,7 @@ import { Header, MainContainer } from './'
 
 injectTapEventPlugin()
 
-function App (props) {
+function Application (props) {
   return (
     <MainContainer>
       <Header />
@@ -26,8 +26,8 @@ function App (props) {
   )
 }
 
-App.propTypes = {
+Application.propTypes = {
   children: PropTypes.node,
 }
 
-export default App
+export default Application

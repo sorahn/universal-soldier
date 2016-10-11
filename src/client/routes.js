@@ -2,11 +2,11 @@ import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
 /* container components */
-import { App } from './components'
+import { Application } from './components'
 import { Search } from './components/search'
 
 const routes = (
-  <Route path='/' component={App}>
+  <Route path='/' component={Application}>
     <IndexRoute component={Search} />
     <Route
       basePath='/'
