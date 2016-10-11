@@ -8,7 +8,13 @@ import { TextField } from 'redux-form-material-ui'
 function SearchBox (props) {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field name='keyword' component={TextField} floatingLabelText='Keyword' fullWidth />
+      <Field
+        component={TextField}
+        floatingLabelText='Keyword'
+        fullWidth
+        id='search-keyword'
+        name='keyword'
+      />
     </form>
   )
 }

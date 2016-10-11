@@ -25,7 +25,7 @@ function MainContainer (props) {
 }
 
 const state = state => ({
-  paddingTop: state.application.searchBarVisible ? 64 : 0
+  paddingTop: state.application.searchBoxVisible ? 64 : 0
 })
 
 export default connect(state)(MainContainer)

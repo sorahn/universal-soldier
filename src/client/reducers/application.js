@@ -1,5 +1,5 @@
 const initialState = {
-  searchBarVisible: false,
+  searchBoxVisible: false,
 }
 
 export default function reducer (state = initialState, action) {
@@ -7,7 +7,7 @@ export default function reducer (state = initialState, action) {
     case 'TOGGLE_SEARCH':
       return {
         ...state,
-        searchBarVisible: !state.searchBarVisible,
+        searchBoxVisible: !state.searchBoxVisible,
       }
 
     default: return state

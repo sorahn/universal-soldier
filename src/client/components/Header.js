@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import Search from 'material-ui/svg-icons/action/search'
 import { connect } from 'react-redux'
+import { toggleSearchBox } from '../actions/application'
 
 const styles = {
   appbar: {
@@ -18,7 +19,7 @@ const styles = {
 
 function Header (props) {
   const searchIcon = (
-    <IconButton onTouchTap={props.toggleSearch}>
+    <IconButton onTouchTap={props.toggleSearchBox}>
       <Search />
     </IconButton>
   )
@@ -32,8 +33,6 @@ function Header (props) {
   )
 }
 
-const actions = {
-  toggleSearch: () => ({ type: 'TOGGLE_SEARCH' })
-}
+const actions = { toggleSearchBox }
 
 export default connect(null, actions)(Header)

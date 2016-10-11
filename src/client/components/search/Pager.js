@@ -18,28 +18,32 @@ export default function Pager (props) {
 
   const pathParams = baseParams.map(param => String(params[param]))
 
-  const prevLink = page_number < 3
+  // Just link back to the base path instead of '/page/1'
+  const prevLinkPath = page_number <= 2
     ? path.join(basePath, ...pathParams)
     : path.join(basePath, ...pathParams, 'page', String(page_number - 1))
 
-  const nextLink = path.join(basePath, ...pathParams, 'page', String(page_number + 1))
+  const prevLinkDisabled = page_number === 1
+
+  const prevLink = prevLinkDisabled ? <span /> : <Link to={prevLinkPath} />
+
+  const nextLinkPath = path.join(basePath, ...pathParams, 'page', String(page_number + 1))
 
   return (
     <Flex justify='space-between'>
       <Box>
         <RaisedButton
           primary
-          containerElement={<Link to={prevLink} />}
-          disabled={page_number === 1}
+          containerElement={prevLink}
+          disabled={prevLinkDisabled}
           label='previous'
         />
       </Box>
       <Box>
         <RaisedButton
           primary
-          containerElement={<Link to={nextLink} onTouchTap={e => e.target.blur()} />}
+          containerElement={<Link to={nextLinkPath} />}
           label='next'
-          onTouchTap={e => { e.persist(); setImmediate(() => e.target.blur()) }}
         />
       </Box>
     </Flex>
