@@ -20,5 +20,5 @@ export const fetchSearch = (params, options) => dispatch => {
   return dispatch({
     type: 'SEARCH',
     payload: fetchWrapper(`http://localhost:8181/api/search/v1/list?${query}`)
-  })
+  }).catch(e => console.error(e))
 }
