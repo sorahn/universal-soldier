@@ -4,14 +4,10 @@ import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import Search from 'material-ui/svg-icons/action/search'
 
-import logo from '../../assets/universal-soldier.png'
-
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
 function App (props) {
-  console.log(logo)
-
   const searchIcon = (
     <IconButton onTouchTap={e => console.log(e)}>
       <Search />
@@ -21,7 +17,7 @@ function App (props) {
   return (
     <Card>
       <AppBar
-        title='Universal React Test'
+        title={<img src='http://i.imgur.com/YYpfYrX.png' alt='Universal Soldier' style={{maxHeight: '80%', verticalAlign: 'middle'}} />}
         iconElementRight={searchIcon}
       />
 

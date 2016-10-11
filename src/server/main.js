@@ -29,8 +29,9 @@ app.use(router.routes())
 
 app.listen(8181, 'localhost', function (err) {
   if (err) {
-    console.log(err);
-    return;
+    console.log(err)
+    return
   }
-  console.log('listening on http://127.0.0.1:8181')
+
+  console.log('Node server listening on http://localhost:8181/')
 })
