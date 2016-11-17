@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react'
 import { CardText } from 'material-ui/Card'
 import { Box } from 'reflexbox'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import { Header, MainContainer } from './'
-
-injectTapEventPlugin()
 
 function Application (props) {
   return (

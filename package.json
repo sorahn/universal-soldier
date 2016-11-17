@@ -9,6 +9,7 @@
     "url": "https://github.com/sorahn/universal-soldier.git"
   },
   "dependencies": {
+    "config": "^1.24.0",
     "isomorphic-fetch": "^2.2.1",
     "kcors": "^2.1.1",
     "koa": "^2.0.0",
@@ -27,11 +28,11 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
-    "react-router": "^2.8.1",
+    "react-router": "^3.0.0",
     "react-router-redux": "^4.0.6",
-    "react-tap-event-plugin": "^1.0.0",
+    "react-tap-event-plugin": "^2.0.0",
     "redux": "^3.6.0",
-    "redux-fetch-middleware": "^1.3.2",
+    "redux-fetch-middleware": "^2.0.3",
     "redux-form": "^6.1.0",
     "redux-form-material-ui": "^4.1.0",
     "redux-logger": "^2.7.0",
@@ -49,7 +50,7 @@
     "babel-runtime": "^6.11.6",
     "babel-watch": "^2.0.3",
     "concurrently": "^3.1.0",
-    "react-scripts": "^0.6.1"
+    "react-scripts": "^0.7.0"
   },
   "scripts": {
     "all": "concurrently  --prefix '[{name}]' --names 'webapp,server' 'npm run start -- --color' 'npm run server'",

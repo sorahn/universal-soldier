@@ -5,11 +5,14 @@ import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import 'normalize-css/normalize.css'
+
 import { configureStore } from './store'
 import routes from './routes'
 import theme from './theme'
 
-import 'normalize-css/normalize.css'
+injectTapEventPlugin()
 
 const state = window.__initialState__ || undefined
 const store = configureStore(browserHistory, state)

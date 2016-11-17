@@ -29,7 +29,6 @@ app.use(mount('/public', assets))
 app.use(router.routes())
 
 const { port } = config
-console.log(config)
 
 app.listen(port, 'localhost', function (err) {
   if (err) {
